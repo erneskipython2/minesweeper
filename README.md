@@ -15,4 +15,5 @@ In each commit step I'am going to be describing here the changes
 
     -I added the basic project skeleton with expected packages and maven configuration dependencies, testing and coverage
     -I added the basic log configuration properties
+    -I added info project properties
 
