@@ -10,7 +10,8 @@ This repository is a functional minesweeper game with api rest backend
     - Spring Boot
     - Mongo DB
 
-##Description
+## Description
+
 In each commit step I'am going to be describing here the changes
 
     -I added the basic project skeleton with expected packages and maven configuration dependencies, testing and coverage
@@ -21,4 +22,6 @@ In each commit step I'am going to be describing here the changes
     -I improved the last test coverage for SessionGame class
     -Removed .DS_Store
     -As I'm going to create now some functional features I'm going to follow with some basic branch strategies dev/staging/master, pushing to remote, and change to dev branch 
+    -Created the repository layer and basic rest controller for create a new party
+    -Added basic persistence interface for SessionGame
 

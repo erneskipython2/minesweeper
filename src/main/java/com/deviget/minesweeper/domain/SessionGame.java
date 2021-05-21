@@ -14,7 +14,6 @@ import lombok.Data;
 /**
  * Model for describe the Session Game persistence in DB
  * @author Erneski Coronado
- *
  */
 @Data
 @Builder
