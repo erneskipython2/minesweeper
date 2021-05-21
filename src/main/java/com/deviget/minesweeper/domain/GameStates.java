@@ -8,6 +8,7 @@ package com.deviget.minesweeper.domain;
 public enum GameStates {
 
 	STARTED,
+	PLAYING,
 	PAUSED,
 	RESUME
 }

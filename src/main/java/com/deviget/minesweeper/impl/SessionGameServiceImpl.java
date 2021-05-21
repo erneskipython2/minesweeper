@@ -1,13 +1,16 @@
 package com.deviget.minesweeper.impl;
 
 import java.util.Calendar;
-import java.util.Date;
+import java.util.Optional;
+import java.util.concurrent.TimeUnit;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.deviget.minesweeper.domain.ErrorTypes;
 import com.deviget.minesweeper.domain.GameStates;
 import com.deviget.minesweeper.domain.SessionGame;
+import com.deviget.minesweeper.exception.MineSweeperException;
 import com.deviget.minesweeper.repository.SessionGameRepositoryService;
 import com.deviget.minesweeper.service.SessionGameService;
 
@@ -40,14 +43,67 @@ public class SessionGameServiceImpl implements SessionGameService {
 
 	@Override
 	public SessionGame updateParty(String id, String state) {
+		String newState = validateState(state);
+		SessionGame persistence = validatePersistence(sessionRep.findById(id));
 		
-		return new SessionGame("123", "123", "RESUME",  new Date(), new Date(), 60000L); 
+		Calendar start = Calendar.getInstance();
+		Calendar lastUpdate = Calendar.getInstance();
+		
+		if(!persistence.getState().equals(GameStates.PAUSED.toString())) {
+			start.setTime(persistence.getLastUpdate());
+			long diff = lastUpdate.getTimeInMillis() - start.getTimeInMillis();
+			long seconds = TimeUnit. MILLISECONDS. toSeconds(diff);
+			persistence.setTimeTracking(persistence.getTimeTracking() + seconds );
+		}
+		persistence.setLastUpdate(lastUpdate.getTime());
+		persistence.setState(newState);
+		
+		return sessionRep.save(persistence);
+
 	}
 
 	@Override
 	public Boolean deleteParty(String id) {
 		
+		SessionGame persistence = validatePersistence(sessionRep.findById(id));
+		sessionRep.delete(persistence);
 		return true;
+		
+	}
+	
+	
+	/**
+	 * Validate if the given state is valid
+	 * @param state
+	 * @return
+	 */
+	private String validateState(String state) {
+		Boolean valid = false;
+	    for (GameStates st : GameStates.values()) {
+	        if (st.name().equalsIgnoreCase(state)) {
+	        	valid =  true;
+	        }
+	            
+	    }
+	    if(Boolean.FALSE.equals(valid)) {
+			throw new MineSweeperException(ErrorTypes.INVALID_STATE.toString());
+		}
+	    if(state.equalsIgnoreCase(GameStates.RESUME.toString())) {
+	    	state = GameStates.PLAYING.toString();
+	    }
+	    return state.toUpperCase();
+	    
+	}
+	
+	/**
+	 * Validate if a given Id for update exists and return the value if any
+	 * @param persistence
+	 */
+	private SessionGame validatePersistence(Optional<SessionGame> persistence) {
+		if(!persistence.isPresent()) {
+			throw new MineSweeperException(ErrorTypes.INVALID_SESSION.toString());
+		}
+		return persistence.get();
 	}
 
 }

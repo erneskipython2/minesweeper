@@ -27,4 +27,6 @@ In each commit step I'am going to be describing here the changes
     -Added basic service interface for SessionGame available operations
     -Added basic TDD tests and implementation for RED / GREEN / REFACTOR SessionGameService
     -Added functional implementation for createParty
+    -Added logic for update and Delete SessionGame, if the game was in state PAUSED don't add the time tracking. Added some validations and Business Exceptions, Added testing for each case
+    
 
