@@ -25,4 +25,5 @@ In each commit step I'am going to be describing here the changes
     -Created the repository layer and basic rest controller for create a new party
     -Added basic persistence interface for SessionGame
     -Added basic service interface for SessionGame available operations
+    -Added basic TDD tests and implementation for RED / GREEN / REFACTOR SessionGameService
 

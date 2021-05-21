@@ -2,12 +2,12 @@ package com.deviget.minesweeper.domain;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
-
-import java.util.Calendar;
+import java.util.Date;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
+import com.deviget.minesweeper.utils.MockedData;
 import com.openpojo.reflection.PojoClass;
 import com.openpojo.reflection.impl.PojoClassFactory;
 import com.openpojo.validation.Validator;
@@ -33,26 +33,21 @@ class SessionGameTest {
                 .build();
         validator.toString();
         validator.validate(pojoclass);
-        String id = "123";
-        String userId = "1234";
-        String state = "PLAYING";     
-        Calendar start = Calendar.getInstance();
-        Calendar end = Calendar.getInstance();
-        start.set(2021, 4, 20, 23, 42, 0);
-        end.set(2021, 4, 20, 23, 43, 0);
-        Long timeTracking = end.getTimeInMillis() - start.getTimeInMillis();
-        SessionGame ses1 = new SessionGame(id, userId, state, start.getTime(), end.getTime(), timeTracking);        
+        Date start = MockedData.generateGameDate(2021, 4, 20, 23, 43, 0);
+        Date end = MockedData.generateGameDate(2021, 4, 20, 23, 44, 0);
+        Long timeTracking = MockedData.generateTimeTracking(start, end);
+        SessionGame ses1 = new SessionGame(MockedData.ID, MockedData.USER_ID, MockedData.STATE,  start, end, timeTracking);        
         SessionGame ses2 = SessionGame
         		.builder()
-        		.id(id)
-        		.userId(userId)
-        		.state(state)
-        		.startGame(start.getTime())
-        		.lastUpdate(end.getTime())
+        		.id(MockedData.ID)
+        		.userId(MockedData.USER_ID)
+        		.state(MockedData.STATE)
+        		.startGame(start)
+        		.lastUpdate(end)
         		.timeTracking(timeTracking)
         		.build();
         assertTrue(ses1.toString().contains("timeTracking=60000"));
-        assertTrue(ses2.toString().contains("state=" + state));
+        assertTrue(ses2.toString().contains("state=" + MockedData.STATE));
         assertEquals(ses1, ses2); 
         EqualsVerifier.simple().forClass(SessionGame.class).verify();
         SessionGame.builder().toString();
