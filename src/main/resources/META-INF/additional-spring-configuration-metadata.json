@@ -43,5 +43,25 @@
     "name": "management.health.mongo.enabled",
     "type": "java.lang.String",
     "description": "A description for 'management.health.mongo.enabled'"
+  },
+  {
+    "name": "endpoint.root",
+    "type": "java.lang.String",
+    "description": "A description for 'endpoint.root'"
+  },
+  {
+    "name": "endpoint.v1",
+    "type": "java.lang.String",
+    "description": "A description for 'endpoint.v1'"
+  },
+  {
+    "name": "endpoint.session-games",
+    "type": "java.lang.String",
+    "description": "A description for 'endpoint.session-games'"
+  },
+  {
+    "name": "endpoint.session-games",
+    "type": "java.lang.String",
+    "description": "A description for 'endpoint.session-games'"
   }
 ]}
