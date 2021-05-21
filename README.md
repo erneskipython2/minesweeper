@@ -24,4 +24,5 @@ In each commit step I'am going to be describing here the changes
     -As I'm going to create now some functional features I'm going to follow with some basic branch strategies dev/staging/master, pushing to remote, and change to dev branch 
     -Created the repository layer and basic rest controller for create a new party
     -Added basic persistence interface for SessionGame
+    -Added basic service interface for SessionGame available operations
 
