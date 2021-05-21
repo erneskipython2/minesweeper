@@ -14,6 +14,6 @@ import com.deviget.minesweeper.domain.SessionGame;
  */
 public interface SessionGameRepositoryService extends MongoRepository<SessionGame, String> {
 	
-	@Query("{ 'userId' : ?0 }")
+	@Query(value="{ 'userId' : ?0 }", fields="{'state': 1, 'timeTracking': 1}")
 	List<SessionGame> findByUserId(String userId);
 }

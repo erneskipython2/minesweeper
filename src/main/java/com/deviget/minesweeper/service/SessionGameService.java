@@ -1,5 +1,7 @@
 package com.deviget.minesweeper.service;
 
+import java.util.List;
+
 import com.deviget.minesweeper.domain.SessionGame;
 
 /**
@@ -9,6 +11,20 @@ import com.deviget.minesweeper.domain.SessionGame;
  */
 public interface SessionGameService {
 
+	/**
+	 * Return all the games initiated by the user
+	 * @param userId
+	 * @return
+	 */
+	List<SessionGame> getSessionGames(String userId);
+	
+	/**
+	 * Returns a specific game
+	 * @param id
+	 * @return
+	 */
+	SessionGame getSessionGame(String id);
+	
 	/**
 	 * Creates a new party given the owner user
 	 * @param userId

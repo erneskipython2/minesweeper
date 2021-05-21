@@ -4,6 +4,7 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
+import java.util.Arrays;
 import java.util.Date;
 import java.util.Optional;
 
@@ -81,5 +82,13 @@ class SessionGameServiceImplTest {
 		Mockito.when(repo.findById(Mockito.anyString())).thenReturn(Optional.of(session));
 		Mockito.doNothing().when(repo).deleteById(Mockito.anyString());
 		assertTrue(service.deleteParty(MockedData.ID));
+	}
+	
+	@Test
+	void findParty() {
+		Mockito.when(repo.findById(Mockito.anyString())).thenReturn(Optional.of(session));
+		Mockito.when(repo.findByUserId(Mockito.anyString())).thenReturn(Arrays.asList(session));
+		assertNotNull(service.getSessionGames(MockedData.USER_ID));
+		assertNotNull(service.getSessionGame(MockedData.ID));
 	}
 }

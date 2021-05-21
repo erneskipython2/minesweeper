@@ -1,6 +1,7 @@
 package com.deviget.minesweeper.impl;
 
 import java.util.Calendar;
+import java.util.List;
 import java.util.Optional;
 import java.util.concurrent.TimeUnit;
 
@@ -71,6 +72,18 @@ public class SessionGameServiceImpl implements SessionGameService {
 		
 	}
 	
+	@Override
+	public List<SessionGame> getSessionGames(String userId) {
+		
+		return sessionRep.findByUserId(userId);
+	}
+
+	@Override
+	public SessionGame getSessionGame(String id) {
+		
+		return validatePersistence(sessionRep.findById(id));
+	}
+	
 	
 	/**
 	 * Validate if the given state is valid
@@ -105,5 +118,6 @@ public class SessionGameServiceImpl implements SessionGameService {
 		}
 		return persistence.get();
 	}
+
 
 }
