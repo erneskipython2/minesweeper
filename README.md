@@ -18,4 +18,5 @@ In each commit step I'am going to be describing here the changes
     -I added info project properties
     -I added mongodb, actuator and some other common props, added actuator dep for prod ready features
     -I added the SessionGame model class for describe a party persistence and tests for this pojo works as expected.
+    -I improved the last test coverage for SessionGame class
 

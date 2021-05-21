@@ -52,8 +52,10 @@ class SessionGameTest {
         		.timeTracking(timeTracking)
         		.build();
         assertTrue(ses1.toString().contains("timeTracking=60000"));
+        assertTrue(ses2.toString().contains("state=" + state));
         assertEquals(ses1, ses2); 
         EqualsVerifier.simple().forClass(SessionGame.class).verify();
+        SessionGame.builder().toString();
 	}
 
 }

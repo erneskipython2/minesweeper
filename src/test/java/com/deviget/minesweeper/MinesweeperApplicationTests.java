@@ -8,6 +8,7 @@ class MinesweeperApplicationTests {
 
 	@Test
 	void contextLoads() {
+		MinesweeperApplication.main(new String[] {});
 	}
 
 }
