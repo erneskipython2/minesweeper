@@ -14,4 +14,5 @@ This repository is a functional minesweeper game with api rest backend
 In each commit step I'am going to be describing here the changes
 
     -I added the basic project skeleton with expected packages and maven configuration dependencies, testing and coverage
+    -I added the basic log configuration properties
 
