@@ -33,6 +33,7 @@ In each commit step I'am going to be describing here the changes
     -Added logic for find user parties and a specific party with testing
     -Added basic rest controller with create(post) and update(put) game, create basic http auth config, create endpoints in props and postman init collections for testing api in docs/ folder
     -Added rest controller for get parties and party, testing and updated collections
+    -Added BoardSettings model with some default constructors for levels and tests
 
    
 ## Postman Collections

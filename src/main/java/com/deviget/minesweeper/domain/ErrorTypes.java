@@ -8,5 +8,6 @@ package com.deviget.minesweeper.domain;
 public enum ErrorTypes {
 
 	INVALID_STATE,
-	INVALID_SESSION
+	INVALID_SESSION,
+	INVALID_LEVEL
 }
