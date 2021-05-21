@@ -118,6 +118,66 @@
 				}
 			},
 			"response": []
+		},
+		{
+			"name": "getParties",
+			"request": {
+				"auth": {
+					"type": "basic",
+					"basic": [
+						{
+							"key": "password",
+							"value": "pass",
+							"type": "string"
+						},
+						{
+							"key": "username",
+							"value": "user",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8090/api/v1/session-games/123",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8090",
+					"path": [
+						"api",
+						"v1",
+						"session-games",
+						"123"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "getParty",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8090/api/v1/session-games/123/60a787809ef9e75027bbeb64",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8090",
+					"path": [
+						"api",
+						"v1",
+						"session-games",
+						"123",
+						"60a787809ef9e75027bbeb64"
+					]
+				}
+			},
+			"response": []
 		}
 	]
 }
