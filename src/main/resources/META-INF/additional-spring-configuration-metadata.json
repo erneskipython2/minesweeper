@@ -23,5 +23,25 @@
     "name": "info.app.java.version",
     "type": "java.lang.String",
     "description": "A description for 'info.app.java.version'"
+  },
+  {
+    "name": "management.endpoint.health.show-details",
+    "type": "java.lang.String",
+    "description": "A description for 'management.endpoint.health.show-details'"
+  },
+  {
+    "name": "management.endpoints.web.exposure.include",
+    "type": "java.lang.String",
+    "description": "A description for 'management.endpoints.web.exposure.include'"
+  },
+  {
+    "name": "management.endpoints.web.exposure.exclude",
+    "type": "java.lang.String",
+    "description": "A description for 'management.endpoints.web.exposure.exclude'"
+  },
+  {
+    "name": "management.health.mongo.enabled",
+    "type": "java.lang.String",
+    "description": "A description for 'management.health.mongo.enabled'"
   }
 ]}
