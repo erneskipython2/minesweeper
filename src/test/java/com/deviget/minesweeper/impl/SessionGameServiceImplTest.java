@@ -13,7 +13,6 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.springframework.boot.test.context.SpringBootTest;
-
 import com.deviget.minesweeper.domain.GameStates;
 import com.deviget.minesweeper.domain.SessionGame;
 import com.deviget.minesweeper.exception.MineSweeperException;
@@ -49,7 +48,7 @@ class SessionGameServiceImplTest {
 	@Test
 	void createPartyTest() {
 		Mockito.when(repo.save(Mockito.any(SessionGame.class))).thenReturn(session);
-		SessionGame ses = service.createParty(MockedData.USER_ID);
+		SessionGame ses = service.createParty(MockedData.USER_ID, MockedData.BOARD_SETTINGS);
 		assertNotNull(ses);
 		
 	}
@@ -58,22 +57,22 @@ class SessionGameServiceImplTest {
 	void updatePartyTest() {
 		Mockito.when(repo.save(Mockito.any(SessionGame.class))).thenReturn(session);
 		Mockito.when(repo.findById(Mockito.anyString())).thenReturn(Optional.of(session));
-		assertNotNull(service.updateParty(MockedData.ID, MockedData.STATE));
+		assertNotNull(service.updateParty(MockedData.ID, MockedData.STATE, 0,Optional.empty(), Optional.empty()));
 		
 		session.setState(GameStates.PAUSED.toString());
-		assertNotNull(service.updateParty(MockedData.ID, GameStates.RESUME.toString()));		
+		assertNotNull(service.updateParty(MockedData.ID, GameStates.RESUME.toString(), 0, Optional.empty(), Optional.empty()));		
 	}
 	
 	@Test
 	void updatePartyFailureValidation() {
-		assertThatThrownBy(() -> service.updateParty(MockedData.ID, "ANY_INVALID_STATE"))
+		assertThatThrownBy(() -> service.updateParty(MockedData.ID, "ANY_INVALID_STATE", 0, Optional.empty(), Optional.empty()))
         .isInstanceOf(MineSweeperException.class);
 	}
 	
 	@Test
 	void updatePartyFailurePersistence() {
 		Mockito.when(repo.findById(Mockito.anyString())).thenReturn(Optional.empty());
-		assertThatThrownBy(() -> service.updateParty(MockedData.ID, MockedData.STATE))
+		assertThatThrownBy(() -> service.updateParty(MockedData.ID, MockedData.STATE, 0, Optional.empty(), Optional.empty()))
         .isInstanceOf(MineSweeperException.class);
 	}
 	

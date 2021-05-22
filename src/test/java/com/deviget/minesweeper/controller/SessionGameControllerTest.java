@@ -4,6 +4,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import java.util.Arrays;
 import java.util.Date;
+import java.util.Optional;
 
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
@@ -12,6 +13,7 @@ import org.mockito.Mockito;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.HttpStatus;
 
+import com.deviget.minesweeper.domain.BoardSettings;
 import com.deviget.minesweeper.domain.SessionGame;
 import com.deviget.minesweeper.service.SessionGameService;
 import com.deviget.minesweeper.utils.MockedData;
@@ -42,14 +44,18 @@ class SessionGameControllerTest {
 	
 	@Test
 	void postTest() {
-		Mockito.when(service.createParty(Mockito.anyString())).thenReturn(session);
+		Mockito.when(service.createParty(Mockito.anyString(), Mockito.any(BoardSettings.class))).thenReturn(session);
 		
-		assertEquals(HttpStatus.OK, ctrl.createParty("123").getStatusCode());
+		assertEquals(HttpStatus.OK, ctrl.createParty("123", 
+				Optional.of(BoardSettings.EASY),
+				Optional.of(9),
+				Optional.of(9),
+				Optional.of(10)).getStatusCode());
 	}
 	
 	@Test
 	void putTest() {
-		Mockito.when(service.updateParty(Mockito.anyString(), Mockito.anyString())).thenReturn(session);
+		Mockito.when(service.updateParty(Mockito.anyString(), Mockito.anyString(), 0, Optional.empty(), Optional.empty())).thenReturn(session);
 		
 		assertEquals(HttpStatus.OK, ctrl.updateParty("123", "abcd").getStatusCode());
 	}
@@ -69,11 +75,11 @@ class SessionGameControllerTest {
 	void getTest() {
 		Mockito.when(service.getSessionGames(Mockito.anyString())).thenReturn(Arrays.asList(session));
 		
-		assertEquals(HttpStatus.OK, ctrl.getParties("123").getStatusCode());
+		assertEquals(HttpStatus.OK, ctrl.getSessionParties("123").getStatusCode());
 		
 		Mockito.when(service.getSessionGame(Mockito.anyString())).thenReturn(session);
 		
-		assertEquals(HttpStatus.OK, ctrl.getParties("123", "abcd").getStatusCode());
+		assertEquals(HttpStatus.OK, ctrl.getSessionParties("123", "abcd").getStatusCode());
 	}
 	
 }
