@@ -63,5 +63,10 @@
     "name": "endpoint.session-games",
     "type": "java.lang.String",
     "description": "A description for 'endpoint.session-games'"
+  },
+  {
+    "name": "endpoint.play",
+    "type": "java.lang.String",
+    "description": "A description for 'endpoint.play'"
   }
 ]}

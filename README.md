@@ -33,6 +33,41 @@ In each commit step I'am going to be describing here the changes
     -Added logic for find user parties and a specific party with testing
     -Added basic rest controller with create(post) and update(put) game, create basic http auth config, create endpoints in props and postman init collections for testing api in docs/ folder
     -Added rest controller for get parties and party, testing and updated collections
+    -Added BoardSettings model with some default constructors for levels and tests
+    
+    -Added Field model for describe every cell and logic for generate the board and fill the mines randomly and a handy printer helper
+    -At this point you can see a board with number of mines adjacent, flag, safe fields and mines when you lose or surrender:  
+    
+	*****ⓂⒾⓃⒺⓈⓌⒺⒺⓅⒺⓇ*****
+	🅱🆈 🅴🆁🅽🅴🆂🅺🅸 🅲🅾🆁🅾🅽🅰🅳🅾
+	
+	Instructions: Send with the row and column params your next move, Enjoy!
+	State: STARTED | Time Playing: 343 (seconds)
+	Settings: BoardSettings(rows=9, columns=9, mines=10)
+	Legend: _ -> unknow | [1..n] -> Number of Mines adjacent | ? -> Flagged | * -> Mined, so you losed :(
+	
+	[̲̅M][̲̅Y] [̲̅B][̲̅O][̲̅A][̲̅R][̲̅D]
+	  |0|1|2|3|4|5|6|7|8|
+	 0| | |1|_|_|_|1|_|_|
+	 1|1|1|2|_|_|_|_|_|_|
+	 2|_|_|_|_|_|_|_|_|_|
+	 3|1|1|2|_|_|_|_|_|_|
+	 4| | |1|_|_|_|_|_|_|
+	 5| | |1|_|_|_|_|_|_|
+	 6| | |1|_|_|_|_|_|_|
+	 7| | |1|?|_|_|_|_|_|
+	 8| | |1|_|_|_|_|_|1|
+		
+	-Added interface for playing
+	-Added play endpoints and base logic for playing. Some corrections and pretty presentation.
+	-Added some logic for move to field and clear or lose.
+	-Clearing some code and comments for next, added logic for flag and client-side board (without the mines)
+	-Correction to flag logic
+	-Added logic for count the number of mines adjacent to each one in the realBoard
+	-Added validation if game is already ended
+	-Added logic for clean recursively the board when a field is safe and its adjacent fields
+	-Improved custom row, columns and mines board creation
+	-Added logic for move mine if this is the first move
 
    
 ## Postman Collections

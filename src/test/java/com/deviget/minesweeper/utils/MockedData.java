@@ -3,6 +3,8 @@ package com.deviget.minesweeper.utils;
 import java.util.Calendar;
 import java.util.Date;
 
+import com.deviget.minesweeper.domain.BoardSettings;
+
 /**
  * Mocked data for testing
  * @author Erneski Coronado
@@ -17,6 +19,11 @@ public class MockedData {
 	public static final String ID = "123";
 	public static final String USER_ID = "1234";
 	public static final String STATE = "PLAYING";
+	public static final BoardSettings BOARD_SETTINGS =  BoardSettings.builder()
+			.columns(9)
+			.rows(9)
+			.mines(10)
+			.build();
 
 	/**
 	 * Only for testing clean code

@@ -10,5 +10,8 @@ public enum GameStates {
 	STARTED,
 	PLAYING,
 	PAUSED,
-	RESUME
+	RESUME,
+	RESIGNED,
+	LOSE,
+	WON
 }
