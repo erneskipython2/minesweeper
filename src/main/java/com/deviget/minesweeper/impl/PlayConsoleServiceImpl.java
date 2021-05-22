@@ -4,7 +4,6 @@ import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
 import com.deviget.minesweeper.domain.Field;
 import com.deviget.minesweeper.domain.GameStates;
 import com.deviget.minesweeper.domain.SessionGame;
@@ -32,7 +31,7 @@ public class PlayConsoleServiceImpl implements PlayConsoleService {
 	@Override
 	public String play(String id) {
 		SessionGame game = GameUtils.validatePersistence(sessionRep.findById(id));
-		String board = GameUtils.printBoard(game, false);
+		String board = GameUtils.printBoard(game, false, false);
 		log.debug("Retrieve party session id {} -  board \n{}",game.getId(), board );
 		return board;
 	}
@@ -55,11 +54,11 @@ public class PlayConsoleServiceImpl implements PlayConsoleService {
 			log.debug("mined field, lose!");
 		}else {
 			playingBoard[row][column].setSafe(true);
+			playingBoard[row][column].setAdyacentMines(game.getGeneratedBoard()[row][column].getAdyacentMines());
 		}
-		playingBoard[row][column].setAdyacentMines(0);//TODO COUNT THE MINES RECURSIVELY
 						
 		SessionGame updated = session.updateParty(id, game.getState(), Optional.of(playingBoard));
-		String board = GameUtils.printBoard(updated, updated.getState().equals(GameStates.LOSE.toString()));
+		String board = GameUtils.printBoard(updated, updated.getState().equals(GameStates.LOSE.toString()), updated.getState().equals(GameStates.LOSE.toString()));
 		log.debug("Playing party session id {} -  board \n{}",game.getId(), board );
 		return board;
 	}
@@ -68,16 +67,14 @@ public class PlayConsoleServiceImpl implements PlayConsoleService {
 	public String play(String id, boolean surrender) {
 		SessionGame game = GameUtils.validatePersistence(sessionRep.findById(id));
 		if(!surrender) {
-			return GameUtils.printBoard(game, false);
+			return GameUtils.printBoard(game, false, false);
 		}
 		game.setState(GameStates.LOSE.toString());
-		
-		//TODO: reveal the game in object for next
 		SessionGame updated = session.updateParty(id, game.getState(), Optional.empty());		
 		
-		String board = GameUtils.printBoard(updated, true);
+		String board = GameUtils.printBoard(updated, true, true);
 		log.debug("Surrender party session id {} -  board \n{}",game.getId(), board );
 		return board;
 	}
-
+	
 }

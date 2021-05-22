@@ -2,7 +2,9 @@ package com.deviget.minesweeper.util;
 
 import java.util.Optional;
 
+import com.deviget.minesweeper.domain.BoardSettings;
 import com.deviget.minesweeper.domain.ErrorTypes;
+import com.deviget.minesweeper.domain.Field;
 import com.deviget.minesweeper.domain.SessionGame;
 import com.deviget.minesweeper.exception.MineSweeperException;
 
@@ -25,7 +27,7 @@ public class GameUtils {
 	 * @param reveal
 	 * @return
 	 */
-	public static final String printBoard(SessionGame game, boolean reveal) {
+	public static final String printBoard(SessionGame game, boolean reveal, boolean realBoard) {
 		
 		String title =  "*****ⓂⒾⓃⒺⓈⓌⒺⒺⓅⒺⓇ*****";
 		String author = "🅱🆈 🅴🆁🅽🅴🆂🅺🅸 🅲🅾🆁🅾🅽🅰🅳🅾";
@@ -62,8 +64,14 @@ public class GameUtils {
 			bld.append(r);
 			bld.append("|");
 			for(int c=0; c<game.getSettings().getColumns(); c++) {
+				Field[][] generatedBoard;
+				if(realBoard) {
+					generatedBoard = game.getGeneratedBoard();
+				}else {
+					generatedBoard = game.getPlayingBoard();
+				}
 				bld
-				.append(reveal ? game.getPlayingBoard()[r][c].revealBoard() : game.getPlayingBoard()[r][c].toString())
+				.append(reveal ? generatedBoard[r][c].revealBoard() : generatedBoard[r][c].toString())
 				.append("|");
 			}
 			bld.append(System.lineSeparator());
@@ -80,5 +88,20 @@ public class GameUtils {
 			throw new MineSweeperException(ErrorTypes.INVALID_SESSION.toString());
 		}
 		return persistence.get();
+	}
+	
+	/**
+	 * Validates if a given coordinates exists for a board configuration
+	 * @param row
+	 * @param column
+	 * @param settings
+	 * @return
+	 */
+	public static final boolean validateFieldExists(int row, int column, BoardSettings settings) {
+		return (
+				(row >= 0 && row <settings.getRows()) 
+				&& 
+				(column >=0 && column <settings.getColumns())
+				);
 	}
 }

@@ -61,6 +61,8 @@ In each commit step I'am going to be describing here the changes
 	-Added play endpoints and base logic for playing. Some corrections and pretty presentation.
 	-Added some logic for move to field and clear or lose.
 	-Clearing some code and comments for next, added logic for flag and client-side board (without the mines)
+	-Correction to flag logic
+	-Added logic for count the number of mines adyacent to each one in the realBoard
 
    
 ## Postman Collections

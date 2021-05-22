@@ -12,6 +12,7 @@ import com.deviget.minesweeper.domain.ErrorTypes;
 import com.deviget.minesweeper.domain.Field;
 import com.deviget.minesweeper.exception.MineSweeperException;
 import com.deviget.minesweeper.service.BoardService;
+import com.deviget.minesweeper.util.GameUtils;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -41,7 +42,9 @@ public class BoardServiceImpl implements BoardService {
 		}
 		
 		Set<Integer> minedFields = generateMines(numberOfCells - 1, settings.getMines());
-		return fillBoard(settings.getRows(), settings.getColumns(), minedFields);		
+		Field[][] filledBoard = fillBoard(settings.getRows(), settings.getColumns(), minedFields);
+		countMines(settings, filledBoard);
+		return filledBoard;		
 	}
 
 	/**
@@ -113,6 +116,57 @@ public class BoardServiceImpl implements BoardService {
 		return board;
 	}
 	
+	/**
+	 * Sets the number of mines adyacent for each field
+	 * @param settings
+	 * @param board
+	 */
+	private void countMines(BoardSettings settings, Field[][] board) {
+
+		for(int r=0; r<settings.getRows(); r++) {
+			for(int c=0; c<settings.getColumns(); c++) {
+				int north = setCount(r-1, c, settings, board);
+				int south = setCount(r+1, c, settings, board);
+				int east = setCount(r, c+1, settings, board);
+				int west = setCount(r, c-1, settings, board);
+				int northEast = setCount(r-1, c+1, settings, board);
+				int northWest = setCount(r-1, c-1, settings, board);
+				int southEast = setCount(r+1, c+1, settings, board);
+				int southWest = setCount(r+1, c-1, settings, board);
+				int total = north + south + east + west + northEast + northWest  + southEast + southWest;
+				log.debug("Mines for Field {}{} "
+						+ "north: {} "
+						+ "south: {} "
+						+ "east: {} "
+						+ "west: {} "
+						+ "northEast: {} "
+						+ "northWest: {} "
+						+ "southEast: {} "
+						+ "southWest: {} "
+						+ "total: {}", r,c,north,south,east,west,northEast,northWest,southEast,southWest,total);
+				board[r][c].setAdyacentMines(total);								
+			}
+		}
+	}
 	
+	/**
+	 * Evaluates is there are a mine at a given coordinate for a field
+	 * @param row
+	 * @param column
+	 * @param settings
+	 * @param board
+	 * @return the count
+	 */
+	private int setCount(int row, int column, BoardSettings settings, Field[][] board) {
+		if(!GameUtils.validateFieldExists(row, column, settings)) {
+			return 0;
+		}
+		if(board[row][column].isMined()) {
+			return 1;
+		}else {
+			return 0;
+		}
+		
+	}	
 
 }

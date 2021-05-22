@@ -19,12 +19,15 @@ import com.deviget.minesweeper.service.BoardService;
 import com.deviget.minesweeper.service.SessionGameService;
 import com.deviget.minesweeper.util.GameUtils;
 
+import lombok.extern.slf4j.Slf4j;
+
 /**
  * Business logic Implementation for  SessionGameService
  * @author Erneski Coronado
  *
  */
 @Service
+@Slf4j
 public class SessionGameServiceImpl implements SessionGameService {
 
 	@Autowired
@@ -49,6 +52,7 @@ public class SessionGameServiceImpl implements SessionGameService {
 				.playingBoard(playingBoard)
 				.settings(settings)
 				.build();
+		log.info("Generated Board are \n{}",GameUtils.printBoard(session, true, true));
 		return sessionRep.save(session);
 	}
 
