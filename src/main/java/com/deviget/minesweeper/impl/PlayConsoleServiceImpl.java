@@ -41,25 +41,26 @@ public class PlayConsoleServiceImpl implements PlayConsoleService {
 	public String play(String id, int row, int column, boolean flag) {
 		SessionGame game = GameUtils.validatePersistence(sessionRep.findById(id));
 		Field[][] playingBoard = game.getPlayingBoard();
-		//lose
-		if(game.getGeneratedBoard()[row][column].isMined()) {
+				
+		if(playingBoard[row][column].isSafe()) {
+			log.debug("Field already cleared - skip movement");
+		}else if(flag) {
+			playingBoard[row][column].setFlaged(true);
+			log.debug("Field is flagged");
+		}else if(game.getGeneratedBoard()[row][column].isMined()) {
 			game.setState(GameStates.LOSE.toString());
 			playingBoard[row][column].setMined(true);
+			playingBoard[row][column].setSafe(false);
+			playingBoard[row][column].setFlaged(false);
+			log.debug("mined field, lose!");
 		}else {
 			playingBoard[row][column].setSafe(true);
-			playingBoard[row][column].setAdyacentMines(0);//TODO: count the mines recursively
-			if(flag) {
-				playingBoard[row][column].setFlaged(true);
-				playingBoard[row][column].setSafe(false);
-			}				
 		}
-		//clear
-		
-		
-		
+		playingBoard[row][column].setAdyacentMines(0);//TODO COUNT THE MINES RECURSIVELY
+						
 		SessionGame updated = session.updateParty(id, game.getState(), Optional.of(playingBoard));
 		String board = GameUtils.printBoard(updated, updated.getState().equals(GameStates.LOSE.toString()));
-		log.debug("Surrender party session id {} -  board \n{}",game.getId(), board );
+		log.debug("Playing party session id {} -  board \n{}",game.getId(), board );
 		return board;
 	}
 

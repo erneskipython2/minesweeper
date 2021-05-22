@@ -27,6 +27,7 @@ public class Field {
 	 */
 	@Override
 	public String toString() {
+		
 		if(this.isFlaged) {
 			return "?";
 		}

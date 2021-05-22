@@ -157,13 +157,12 @@ public class SessionGameController {
 			@RequestParam("flag") Optional<Boolean> flag,
 			@RequestParam("surrender") Optional<Boolean> surrender){
 			
-		//limpiar en business este update
 		if(surrender.isPresent()) {
 			return ResponseEntity.ok(play.play(HtmlUtils.htmlEscape(id), surrender.get()));
 		}
 		
 		if(row.isPresent() && column.isPresent()) {
-			return ResponseEntity.ok(play.play(HtmlUtils.htmlEscape(id), row.get(), column.get(), surrender.orElse(false)));
+			return ResponseEntity.ok(play.play(HtmlUtils.htmlEscape(id), row.get(), column.get(), flag.orElse(false)));
 		}
 		return playParty(userId, id);
 	}
