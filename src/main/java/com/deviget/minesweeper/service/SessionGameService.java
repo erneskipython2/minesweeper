@@ -41,7 +41,7 @@ public interface SessionGameService {
 	 * @param state
 	 * @return
 	 */
-	SessionGame updateParty(String id, String state, Optional<Field [][]> board);
+	SessionGame updateParty(String id, String state, int movements, Optional<Field [][]> playingBoard, Optional<Field [][]> generatedBoard);
 	
 	/**
 	 * Deletes a party

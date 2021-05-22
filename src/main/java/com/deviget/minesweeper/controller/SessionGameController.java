@@ -80,7 +80,7 @@ public class SessionGameController {
 			@Valid @NotBlank  @Size(min=6, max=10) @RequestParam("state") String state) {
 		String escapedId = HtmlUtils.htmlEscape(id);
 		String escapedState = HtmlUtils.htmlEscape(state);
-		SessionGame game = session.updateParty(escapedId, escapedState, Optional.empty());
+		SessionGame game = session.updateParty(escapedId, escapedState, 0, Optional.empty(), Optional.empty());
 		SessionGame response = SessionGame.builder()
 				.id(game.getId())
 				.userId(game.getUserId())

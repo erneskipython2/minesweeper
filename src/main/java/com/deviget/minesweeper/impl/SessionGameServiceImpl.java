@@ -51,13 +51,14 @@ public class SessionGameServiceImpl implements SessionGameService {
 				.generatedBoard(generatedBoard)
 				.playingBoard(playingBoard)
 				.settings(settings)
+				.movements(0)
 				.build();
 		log.info("Generated Board are \n{}",GameUtils.printBoard(session, true, true));
 		return sessionRep.save(session);
 	}
 
 	@Override
-	public SessionGame updateParty(String id, String state, Optional<Field [][]> board) {
+	public SessionGame updateParty(String id, String state, int movements, Optional<Field [][]> playingBoard, Optional<Field [][]> generatedBoard) {
 		SessionGame persistence = GameUtils.validatePersistence(sessionRep.findById(id));
 		String newState = validateState(state, persistence);
 		
@@ -73,8 +74,13 @@ public class SessionGameServiceImpl implements SessionGameService {
 		}
 		persistence.setLastUpdate(lastUpdate.getTime());
 		persistence.setState(newState);
-		if(board.isPresent()) {
-			persistence.setPlayingBoard(board.get());
+		persistence.setMovements(movements);
+		if(playingBoard.isPresent()) {
+			persistence.setPlayingBoard(playingBoard.get());
+		}
+		
+		if(generatedBoard.isPresent()) {
+			persistence.setGeneratedBoard(generatedBoard.get());
 		}
 		
 		return sessionRep.save(persistence);

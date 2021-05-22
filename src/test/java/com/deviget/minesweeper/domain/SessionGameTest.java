@@ -41,7 +41,8 @@ class SessionGameTest {
         		MockedData.STATE,  
         		start, 
         		end, 
-        		timeTracking, 
+        		timeTracking,
+        		0,
         		null, 
         		null,
         		null);        

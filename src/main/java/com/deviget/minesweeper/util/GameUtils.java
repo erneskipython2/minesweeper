@@ -1,5 +1,7 @@
 package com.deviget.minesweeper.util;
 
+import java.security.NoSuchAlgorithmException;
+import java.security.SecureRandom;
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -15,11 +17,14 @@ import com.deviget.minesweeper.domain.GameStates;
 import com.deviget.minesweeper.domain.SessionGame;
 import com.deviget.minesweeper.exception.MineSweeperException;
 
+import lombok.extern.slf4j.Slf4j;
+
 /**
  * Some helpers for the game
  * Erneski Coronado
  *
  */
+@Slf4j
 public class GameUtils {
 	
 	private GameUtils() {
@@ -55,6 +60,8 @@ public class GameUtils {
 		.append(" | Time Playing: ")
 		.append(game.getTimeTracking())
 		.append(" (seconds)")
+		.append(" | Movements: ")
+		.append(game.getMovements())
 		.append(System.lineSeparator())
 		.append("Settings: ")
 		.append(game.getSettings())
@@ -200,6 +207,36 @@ public class GameUtils {
 			settings.setMines(mines.get());
 		}
 		return settings;
+	}
+	
+	/**
+	 * Reorganize the board moving a mine from the given position
+	 * @param game
+	 * @param row
+	 * @param column
+	 */
+	public static final void reorderGeneratedBoar(SessionGame game, int row, int column) {
+		try {
+			Field[][] generatedBoard = game.getGeneratedBoard();
+			SecureRandom secureRandom = SecureRandom.getInstance("NativePRNG");
+			boolean inmigrate = true;
+			while(inmigrate) {
+				int newRow = secureRandom.nextInt(game.getSettings().getRows());
+				int newColumn = secureRandom.nextInt(game.getSettings().getColumns());
+				if((newRow == row && newColumn == column) || 
+						generatedBoard[newRow][newColumn].isMined()) {
+					continue;
+				}
+				generatedBoard[row][column].setMined(false);
+				generatedBoard[newRow][newColumn].setMined(true);
+				log.info("mine moved to row: {} column: {}", newRow, newColumn);
+				inmigrate = false;
+			}
+			game.setGeneratedBoard(generatedBoard);
+			
+		}catch(NoSuchAlgorithmException e) {
+			log.error("Error reordering the board {}", e.getMessage());
+		}	
 	}
 	
 }
