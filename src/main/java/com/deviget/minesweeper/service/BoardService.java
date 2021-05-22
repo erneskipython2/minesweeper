@@ -12,8 +12,9 @@ public interface BoardService {
 
 	/**
 	 * Generates a board
-	 * @param settings
-	 * @return the board
+	 * @param settings Settings for build the board
+	 * @param isPlayer Indicates if the board is for client side (should not add the mines)
+	 * @return
 	 */
-	Field[][] generateBoard(BoardSettings settings);
+	Field[][] generateBoard(BoardSettings settings, boolean isPlayer);
 }

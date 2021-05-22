@@ -26,7 +26,7 @@ import lombok.extern.slf4j.Slf4j;
 public class BoardServiceImpl implements BoardService {
 
 	@Override
-	public Field[][] generateBoard(BoardSettings settings) {
+	public Field[][] generateBoard(BoardSettings settings, boolean isPlayer) {
 
 		int numberOfCells = settings.getRows() * settings.getColumns();
 
@@ -34,8 +34,12 @@ public class BoardServiceImpl implements BoardService {
 			throw new MineSweeperException(ErrorTypes.INVALID_MINES_NUMBER.toString());
 		}
 
-		log.info("Creating a new board {}, NumberOfCells: {}", settings, numberOfCells);
+		log.debug("Creating a new board {}, NumberOfCells: {}", settings, numberOfCells);
 
+		if(isPlayer) {
+			return fillBoard(settings.getRows(), settings.getColumns());	
+		}
+		
 		Set<Integer> minedFields = generateMines(numberOfCells - 1, settings.getMines());
 		return fillBoard(settings.getRows(), settings.getColumns(), minedFields);		
 	}
@@ -82,12 +86,30 @@ public class BoardServiceImpl implements BoardService {
 		int currentCell = 0;
 		for (int r=0; r<rows; r++) {
 			for(int c=0; c<columns; c++) {
-				boolean isMined = minedFields.contains(currentCell) ? true : false;
+				boolean isMined = minedFields.contains(currentCell);
 				currentCell++;
 				board[r][c] = new Field(isMined, false, false, 0);
 			}
 		}
 		
+		return board;
+	}
+	
+	/**
+	 * Fills the board with black Fields - This for client side
+	 * @param rows
+	 * @param columns
+	 * @param minedFields
+	 * @return A Board filled
+	 */
+	private Field[][] fillBoard(int rows, int columns) {
+		Field [][] board = new Field[rows][columns];
+
+		for (int r=0; r<rows; r++) {
+			for(int c=0; c<columns; c++) {
+				board[r][c] = new Field(false, false, false, 0);
+			}
+		}		
 		return board;
 	}
 	

@@ -57,9 +57,10 @@ In each commit step I'am going to be describing here the changes
 	7|_| | |_|*|_|_|_|_|
 	8|_| | |_|_|_|_|_|_|
 	
-	-Added interfaz for playing
+	-Added interface for playing
 	-Added play endpoints and base logic for playing. Some corrections and pretty presentation.
 	-Added some logic for move to field and clear or lose.
+	-Clearing some code and comments for next, added logic for flag and client-side board (without the mines)
 
    
 ## Postman Collections

@@ -15,7 +15,6 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.util.HtmlUtils;
 
 import com.deviget.minesweeper.domain.BoardSettings;
-import com.deviget.minesweeper.domain.GameStates;
 import com.deviget.minesweeper.domain.SessionGame;
 import com.deviget.minesweeper.service.PlayConsoleService;
 import com.deviget.minesweeper.service.SessionGameService;
@@ -137,6 +136,12 @@ public class SessionGameController {
 		
 	}
 
+	/**
+	 * A convenience endpoint for get the board console-like view without affecting the party
+	 * @param userId
+	 * @param id
+	 * @return
+	 */
 	@GetMapping(value= {"${endpoint.session-games}/{userId}/{id}${endpoint.play}"})
 	public ResponseEntity<String> playParty(@PathVariable @NotBlank  @Size(min=1, max=30) String userId, 
 			@PathVariable @NotBlank  @Size(min=1, max=30) String id){
@@ -149,16 +154,16 @@ public class SessionGameController {
 			@PathVariable @NotBlank  @Size(min=1, max=30) String id,
 			@RequestParam("row") Optional<Integer> row,
 			@RequestParam("column") Optional<Integer> column,
+			@RequestParam("flag") Optional<Boolean> flag,
 			@RequestParam("surrender") Optional<Boolean> surrender){
 			
 		//limpiar en business este update
 		if(surrender.isPresent()) {
-			updateParty(id, GameStates.RESIGNED.toString());
 			return ResponseEntity.ok(play.play(HtmlUtils.htmlEscape(id), surrender.get()));
 		}
 		
 		if(row.isPresent() && column.isPresent()) {
-			return ResponseEntity.ok(play.play(HtmlUtils.htmlEscape(id), row.get(), column.get()));
+			return ResponseEntity.ok(play.play(HtmlUtils.htmlEscape(id), row.get(), column.get(), surrender.orElse(false)));
 		}
 		return playParty(userId, id);
 	}

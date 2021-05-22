@@ -36,7 +36,8 @@ public class SessionGameServiceImpl implements SessionGameService {
 	public SessionGame createParty(String userId, BoardSettings settings) {
 		
 		Calendar cal = Calendar.getInstance();
-		Field[][] generatedBoard = board.generateBoard(settings);
+		Field[][] generatedBoard = board.generateBoard(settings, false);
+		Field[][] playingBoard = board.generateBoard(settings, true);
 		SessionGame session = SessionGame
 				.builder()
 				.userId(userId)
@@ -45,7 +46,7 @@ public class SessionGameServiceImpl implements SessionGameService {
 				.timeTracking(0L)
 				.state(GameStates.STARTED.toString())
 				.generatedBoard(generatedBoard)
-				.playingBoard(generatedBoard)
+				.playingBoard(playingBoard)
 				.settings(settings)
 				.build();
 		return sessionRep.save(session);

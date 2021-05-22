@@ -8,24 +8,24 @@ package com.deviget.minesweeper.service;
 public interface PlayConsoleService {
 
 	/**
-	 * Return a party
+	 * Gets a party without any changes
 	 * 
 	 * @return The board in String format
 	 */
 	String play(String id);
 	
 	/**
-	 * Sends a movement
+	 * Sends a movement and updates the party state
 	 * @param row
 	 * @param column
 	 * @return The board in String format result
 	 */
-	String play(String id, int row, int column);
+	String play(String id, int row, int column, boolean flag);
 	
 	/**
 	 * Surrender from a party
 	 * @param surrender
 	 * @return The board with all mines discovered
 	 */
-	String play(String id, Boolean surrender);
+	String play(String id, boolean surrender);
 }

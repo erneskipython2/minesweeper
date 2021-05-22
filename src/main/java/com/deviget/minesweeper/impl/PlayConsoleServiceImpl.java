@@ -38,7 +38,7 @@ public class PlayConsoleServiceImpl implements PlayConsoleService {
 	}
 
 	@Override
-	public String play(String id, int row, int column) {
+	public String play(String id, int row, int column, boolean flag) {
 		SessionGame game = GameUtils.validatePersistence(sessionRep.findById(id));
 		Field[][] playingBoard = game.getPlayingBoard();
 		//lose
@@ -47,22 +47,34 @@ public class PlayConsoleServiceImpl implements PlayConsoleService {
 			playingBoard[row][column].setMined(true);
 		}else {
 			playingBoard[row][column].setSafe(true);
-			playingBoard[row][column].setAdyacentMines(0);
+			playingBoard[row][column].setAdyacentMines(0);//TODO: count the mines recursively
+			if(flag) {
+				playingBoard[row][column].setFlaged(true);
+				playingBoard[row][column].setSafe(false);
+			}				
 		}
 		//clear
 		
 		
 		
 		SessionGame updated = session.updateParty(id, game.getState(), Optional.of(playingBoard));
-		String board = GameUtils.printBoard(updated, updated.getState().equals(GameStates.LOSE.toString())? true : false);
+		String board = GameUtils.printBoard(updated, updated.getState().equals(GameStates.LOSE.toString()));
 		log.debug("Surrender party session id {} -  board \n{}",game.getId(), board );
 		return board;
 	}
 
 	@Override
-	public String play(String id, Boolean surrender) {
+	public String play(String id, boolean surrender) {
 		SessionGame game = GameUtils.validatePersistence(sessionRep.findById(id));
-		String board = GameUtils.printBoard(game, true);
+		if(!surrender) {
+			return GameUtils.printBoard(game, false);
+		}
+		game.setState(GameStates.LOSE.toString());
+		
+		//TODO: reveal the game in object for next
+		SessionGame updated = session.updateParty(id, game.getState(), Optional.empty());		
+		
+		String board = GameUtils.printBoard(updated, true);
 		log.debug("Surrender party session id {} -  board \n{}",game.getId(), board );
 		return board;
 	}
