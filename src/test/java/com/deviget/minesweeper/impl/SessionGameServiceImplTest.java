@@ -57,22 +57,22 @@ class SessionGameServiceImplTest {
 	void updatePartyTest() {
 		Mockito.when(repo.save(Mockito.any(SessionGame.class))).thenReturn(session);
 		Mockito.when(repo.findById(Mockito.anyString())).thenReturn(Optional.of(session));
-		assertNotNull(service.updateParty(MockedData.ID, MockedData.STATE));
+		assertNotNull(service.updateParty(MockedData.ID, MockedData.STATE, Optional.empty()));
 		
 		session.setState(GameStates.PAUSED.toString());
-		assertNotNull(service.updateParty(MockedData.ID, GameStates.RESUME.toString()));		
+		assertNotNull(service.updateParty(MockedData.ID, GameStates.RESUME.toString(), Optional.empty()));		
 	}
 	
 	@Test
 	void updatePartyFailureValidation() {
-		assertThatThrownBy(() -> service.updateParty(MockedData.ID, "ANY_INVALID_STATE"))
+		assertThatThrownBy(() -> service.updateParty(MockedData.ID, "ANY_INVALID_STATE", Optional.empty()))
         .isInstanceOf(MineSweeperException.class);
 	}
 	
 	@Test
 	void updatePartyFailurePersistence() {
 		Mockito.when(repo.findById(Mockito.anyString())).thenReturn(Optional.empty());
-		assertThatThrownBy(() -> service.updateParty(MockedData.ID, MockedData.STATE))
+		assertThatThrownBy(() -> service.updateParty(MockedData.ID, MockedData.STATE, Optional.empty()))
         .isInstanceOf(MineSweeperException.class);
 	}
 	

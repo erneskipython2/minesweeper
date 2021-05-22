@@ -54,7 +54,7 @@ class SessionGameControllerTest {
 	
 	@Test
 	void putTest() {
-		Mockito.when(service.updateParty(Mockito.anyString(), Mockito.anyString())).thenReturn(session);
+		Mockito.when(service.updateParty(Mockito.anyString(), Mockito.anyString(), Optional.empty())).thenReturn(session);
 		
 		assertEquals(HttpStatus.OK, ctrl.updateParty("123", "abcd").getStatusCode());
 	}

@@ -84,7 +84,7 @@ public class BoardServiceImpl implements BoardService {
 			for(int c=0; c<columns; c++) {
 				boolean isMined = minedFields.contains(currentCell) ? true : false;
 				currentCell++;
-				board[r][c] = new Field(isMined, false);
+				board[r][c] = new Field(isMined, false, false, 0);
 			}
 		}
 		

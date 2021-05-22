@@ -53,14 +53,13 @@ In each commit step I'am going to be describing here the changes
 	3|_|_|_|*|_|*|_|_|*|
 	4|_|_|_|*|_|_|*|*|_|
 	5|_|*|_|_|*|_|_|_|_|
-	6|_|_|_|_|_|_|_|_|_|
-	7|_|_|_|_|*|_|_|_|_|
-	8|_|_|_|_|_|_|_|_|_|
+	6|_|1|_|_|_|_|_|_|_|
+	7|_| | |_|*|_|_|_|_|
+	8|_| | |_|_|_|_|_|_|
 	
 	-Added interfaz for playing
 	-Added play endpoints and base logic for playing. Some corrections and pretty presentation.
-	
-	
+	-Added some logic for move to field and clear or lose.
 
    
 ## Postman Collections

@@ -18,6 +18,8 @@ public class Field {
 
 	private boolean isMined;
 	private boolean isFlaged;
+	private boolean isSafe;
+	private int adyacentMines;
 	
 	
 	/**
@@ -27,7 +29,13 @@ public class Field {
 	public String toString() {
 		if(this.isFlaged) {
 			return "?";
-		}else {
+		}
+		else if(this.isSafe && adyacentMines > 0) {
+			return Integer.toString(this.adyacentMines);
+		}else if(this.isSafe && adyacentMines == 0) {
+			return " ";
+		}
+		else {
 			return "_";
 		}
 	}	

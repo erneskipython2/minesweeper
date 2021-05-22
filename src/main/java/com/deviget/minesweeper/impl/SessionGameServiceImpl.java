@@ -2,6 +2,7 @@ package com.deviget.minesweeper.impl;
 
 import java.util.Calendar;
 import java.util.List;
+import java.util.Optional;
 import java.util.concurrent.TimeUnit;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -51,7 +52,7 @@ public class SessionGameServiceImpl implements SessionGameService {
 	}
 
 	@Override
-	public SessionGame updateParty(String id, String state) {
+	public SessionGame updateParty(String id, String state, Optional<Field [][]> board) {
 		String newState = validateState(state);
 		SessionGame persistence = GameUtils.validatePersistence(sessionRep.findById(id));
 		
@@ -66,6 +67,9 @@ public class SessionGameServiceImpl implements SessionGameService {
 		}
 		persistence.setLastUpdate(lastUpdate.getTime());
 		persistence.setState(newState);
+		if(board.isPresent()) {
+			persistence.setPlayingBoard(board.get());
+		}
 		
 		return sessionRep.save(persistence);
 

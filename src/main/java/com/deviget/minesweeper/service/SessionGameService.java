@@ -1,8 +1,10 @@
 package com.deviget.minesweeper.service;
 
 import java.util.List;
+import java.util.Optional;
 
 import com.deviget.minesweeper.domain.BoardSettings;
+import com.deviget.minesweeper.domain.Field;
 import com.deviget.minesweeper.domain.SessionGame;
 
 /**
@@ -39,7 +41,7 @@ public interface SessionGameService {
 	 * @param state
 	 * @return
 	 */
-	SessionGame updateParty(String id, String state);
+	SessionGame updateParty(String id, String state, Optional<Field [][]> board);
 	
 	/**
 	 * Deletes a party

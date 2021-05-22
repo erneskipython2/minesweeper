@@ -85,7 +85,7 @@ public class SessionGameController {
 			@Valid @NotBlank  @Size(min=6, max=10) @RequestParam("state") String state) {
 		String escapedId = HtmlUtils.htmlEscape(id);
 		String escapedState = HtmlUtils.htmlEscape(state);
-		SessionGame game = session.updateParty(escapedId, escapedState);
+		SessionGame game = session.updateParty(escapedId, escapedState, Optional.empty());
 		SessionGame response = SessionGame.builder()
 				.id(game.getId())
 				.userId(game.getUserId())
@@ -146,13 +146,21 @@ public class SessionGameController {
 	
 	@PatchMapping(value= {"${endpoint.session-games}/{userId}/{id}${endpoint.play}"})
 	public ResponseEntity<String> playParty(@PathVariable @NotBlank  @Size(min=1, max=30) String userId, 
-			@PathVariable @NotBlank  @Size(min=1, max=30) String id, @RequestParam("surrender") Optional<Boolean> surrender){
+			@PathVariable @NotBlank  @Size(min=1, max=30) String id,
+			@RequestParam("row") Optional<Integer> row,
+			@RequestParam("column") Optional<Integer> column,
+			@RequestParam("surrender") Optional<Boolean> surrender){
 			
+		//limpiar en business este update
 		if(surrender.isPresent()) {
 			updateParty(id, GameStates.RESIGNED.toString());
 			return ResponseEntity.ok(play.play(HtmlUtils.htmlEscape(id), surrender.get()));
 		}
-		return ResponseEntity.ok(play.play(HtmlUtils.htmlEscape(id)));
+		
+		if(row.isPresent() && column.isPresent()) {
+			return ResponseEntity.ok(play.play(HtmlUtils.htmlEscape(id), row.get(), column.get()));
+		}
+		return playParty(userId, id);
 	}
 	
 }
