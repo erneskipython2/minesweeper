@@ -1,12 +1,16 @@
 package com.deviget.minesweeper.util;
 
 import java.util.ArrayList;
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 import com.deviget.minesweeper.domain.BoardSettings;
+import com.deviget.minesweeper.domain.Coordinates;
 import com.deviget.minesweeper.domain.ErrorTypes;
 import com.deviget.minesweeper.domain.Field;
+import com.deviget.minesweeper.domain.FieldCoordinate;
 import com.deviget.minesweeper.domain.GameStates;
 import com.deviget.minesweeper.domain.SessionGame;
 import com.deviget.minesweeper.exception.MineSweeperException;
@@ -61,13 +65,16 @@ public class GameUtils {
 		.append(System.lineSeparator())
 		.append(boardHead)
 		.append(System.lineSeparator());
-		bld.append(" |");
+		bld.append("  |");
 		for(int c=0; c<game.getSettings().getColumns(); c++) {
 			bld.append(c).append("|");
 		}
 		bld.append(System.lineSeparator());
 		
 		for(int r=0; r<game.getSettings().getRows(); r++) {
+			if(r<=9) {
+				bld.append(" ");
+			}
 			bld.append(r);
 			bld.append("|");
 			for(int c=0; c<game.getSettings().getColumns(); c++) {
@@ -76,6 +83,9 @@ public class GameUtils {
 					generatedBoard = game.getGeneratedBoard();
 				}else {
 					generatedBoard = game.getPlayingBoard();
+				}
+				if(c>9) {
+					bld.append(" ");
 				}
 				bld
 				.append(reveal ? generatedBoard[r][c].revealBoard() : generatedBoard[r][c].toString())
@@ -133,4 +143,35 @@ public class GameUtils {
 		}
 
 	}
+	
+	/**
+	 * Generates a map of field adjacent coordinates for a given combination of row a column
+	 * @param row
+	 * @param column
+	 * @return
+	 */
+	public static final Map<Coordinates, FieldCoordinate> getAdjacentMap(int row, int column, SessionGame game){
+		 Map<Coordinates, FieldCoordinate> adjacents = new LinkedHashMap<>();
+		 Field[][] generatedBoard = game.getGeneratedBoard();
+		 adjacents.put(Coordinates.NORTH, FieldCoordinate.builder().row(row-1).column(column).build());
+		 adjacents.put(Coordinates.SOUTH, FieldCoordinate.builder().row(row+1).column(column).build());
+		 adjacents.put(Coordinates.EAST, FieldCoordinate.builder().row(row).column(column+1).build());
+		 adjacents.put(Coordinates.WEST, FieldCoordinate.builder().row(row).column(column-1).build());
+		 adjacents.put(Coordinates.NORTHEAST, FieldCoordinate.builder().row(row-1).column(column+1).build());
+		 adjacents.put(Coordinates.NORTHWEST, FieldCoordinate.builder().row(row-1).column(column-1).build());
+		 adjacents.put(Coordinates.SOUTHEAST, FieldCoordinate.builder().row(row+1).column(column+1).build());
+		 adjacents.put(Coordinates.SOUTHWEST, FieldCoordinate.builder().row(row+1).column(column-1).build());
+		 Map<Coordinates, FieldCoordinate> adjacentsCleaned = new LinkedHashMap<>();
+		 for (Map.Entry<Coordinates,FieldCoordinate> entry : adjacents.entrySet()) {
+			 FieldCoordinate coordinate = entry.getValue();
+			 if(validateFieldExists(coordinate.getRow(), coordinate.getColumn(), game.getSettings())
+					 &&
+					 (!generatedBoard[coordinate.getRow()][coordinate.getColumn()].isMined())) {
+				 adjacentsCleaned.put(entry.getKey(), entry.getValue());
+			 }
+			 
+		 }
+		 return adjacentsCleaned;
+	}
+	
 }

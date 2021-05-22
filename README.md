@@ -42,22 +42,22 @@ In each commit step I'am going to be describing here the changes
 	🅱🆈 🅴🆁🅽🅴🆂🅺🅸 🅲🅾🆁🅾🅽🅰🅳🅾
 	
 	Instructions: Send with the row and column params your next move, Enjoy!
-	State: STARTED | Time Playing: 135 (seconds)
+	State: STARTED | Time Playing: 343 (seconds)
 	Settings: BoardSettings(rows=9, columns=9, mines=10)
 	Legend: _ -> unknow | [1..n] -> Number of Mines adjacent | ? -> Flagged | * -> Mined, so you losed :(
 	
 	[̲̅M][̲̅Y] [̲̅B][̲̅O][̲̅A][̲̅R][̲̅D]
-	 |0|1|2|3|4|5|6|7|8|
-	0|_|_|_|_|1|_|_|_|_|
-	1|_|_|_|_|_|_|_|_|_|
-	2|_|_|_|_|_|_|_|_|_|
-	3|_|4|_|_|_|_|_|_|_|
-	4|_|_|_|_|_|_|_|_|_|
-	5|_|_|_|_|_|_|_|_|_|
-	6|_|_|_|_|_|_|?|_|_|
-	7|_|_| | | | | | |_|
-	8|_|_|_|_|_|_|_|_|_|
-	
+	  |0|1|2|3|4|5|6|7|8|
+	 0| | |1|_|_|_|1|_|_|
+	 1|1|1|2|_|_|_|_|_|_|
+	 2|_|_|_|_|_|_|_|_|_|
+	 3|1|1|2|_|_|_|_|_|_|
+	 4| | |1|_|_|_|_|_|_|
+	 5| | |1|_|_|_|_|_|_|
+	 6| | |1|_|_|_|_|_|_|
+	 7| | |1|?|_|_|_|_|_|
+	 8| | |1|_|_|_|_|_|1|
+		
 	-Added interface for playing
 	-Added play endpoints and base logic for playing. Some corrections and pretty presentation.
 	-Added some logic for move to field and clear or lose.
@@ -65,6 +65,7 @@ In each commit step I'am going to be describing here the changes
 	-Correction to flag logic
 	-Added logic for count the number of mines adjacent to each one in the realBoard
 	-Added validation if game is already ended
+	-Added logic for clean recursively the board when a field is safe and its adjacent fields
 
    
 ## Postman Collections
