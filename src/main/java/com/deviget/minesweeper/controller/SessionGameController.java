@@ -18,6 +18,8 @@ import com.deviget.minesweeper.domain.BoardSettings;
 import com.deviget.minesweeper.domain.SessionGame;
 import com.deviget.minesweeper.service.PlayConsoleService;
 import com.deviget.minesweeper.service.SessionGameService;
+import com.deviget.minesweeper.util.GameUtils;
+
 import java.util.List;
 import java.util.Optional;
 
@@ -52,16 +54,10 @@ public class SessionGameController {
 	public ResponseEntity<SessionGame> createParty(@Valid @NotBlank  @Size(min=1, max=30) @RequestParam("userId") String userId,
 			Optional<String> level, 
 			Optional<Integer> row,
-			Optional<Integer> columns) {
+			Optional<Integer> columns,
+			Optional<Integer> mines) {
 		String escapedUserId = HtmlUtils.htmlEscape(userId);
-		String gameLevel = level.isPresent() ? level.get().toUpperCase() :  BoardSettings.EASY;
-		BoardSettings settings = new BoardSettings(gameLevel);
-		if(row.isPresent()) {
-			settings.setRows(row.get());
-		}
-		if(columns.isPresent()) {
-			settings.setColumns(columns.get());
-		}
+		BoardSettings settings = GameUtils.initSettings(level, row, columns, mines);
 		SessionGame game = session.createParty(escapedUserId, settings);
 		SessionGame response = SessionGame.builder()
 				.id(game.getId())

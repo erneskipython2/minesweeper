@@ -49,7 +49,8 @@ class SessionGameControllerTest {
 		assertEquals(HttpStatus.OK, ctrl.createParty("123", 
 				Optional.of(BoardSettings.EASY),
 				Optional.of(9),
-				Optional.of(9)).getStatusCode());
+				Optional.of(9),
+				Optional.of(10)).getStatusCode());
 	}
 	
 	@Test

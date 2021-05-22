@@ -174,4 +174,32 @@ public class GameUtils {
 		 return adjacentsCleaned;
 	}
 	
+	/**
+	 * Init the BoardSettings with default or custom options
+	 * @param level
+	 * @param row
+	 * @param columns
+	 * @param mines
+	 * @return
+	 */
+	public static final BoardSettings initSettings(Optional<String> level, 
+			Optional<Integer> row,
+			Optional<Integer> columns,
+			Optional<Integer> mines) {
+		BoardSettings settings = new BoardSettings(level.orElse(BoardSettings.EASY));
+		if(row.isPresent() || columns.isPresent() || mines.isPresent()) {
+			settings.setLevel(BoardSettings.CUSTOM);
+		}
+		if(row.isPresent()) {
+			settings.setRows(row.get());
+		}
+		if(columns.isPresent()) {
+			settings.setColumns(columns.get());
+		}
+		if(mines.isPresent()) {
+			settings.setMines(mines.get());
+		}
+		return settings;
+	}
+	
 }

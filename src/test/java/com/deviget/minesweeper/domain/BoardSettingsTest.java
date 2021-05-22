@@ -20,7 +20,7 @@ class BoardSettingsTest {
         BoardSettings easy = new BoardSettings(BoardSettings.EASY);
         BoardSettings normal = new BoardSettings(BoardSettings.NORMAL);
         BoardSettings hard = new BoardSettings(BoardSettings.HARD);
-        BoardSettings customFull = new BoardSettings(9,9,10);
+        BoardSettings customFull = new BoardSettings(9,9,10, BoardSettings.CUSTOM);
         
         assertEquals(custom, easy); 
         assertEquals(custom, customFull); 

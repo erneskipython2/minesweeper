@@ -66,6 +66,7 @@ In each commit step I'am going to be describing here the changes
 	-Added logic for count the number of mines adjacent to each one in the realBoard
 	-Added validation if game is already ended
 	-Added logic for clean recursively the board when a field is safe and its adjacent fields
+	-Improved custom row, columns and mines board creation
 
    
 ## Postman Collections

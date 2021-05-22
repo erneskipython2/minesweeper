@@ -39,16 +39,19 @@ public class BoardSettings {
 	@Min(1)
 	@NotNull
 	private int mines;
+	private String level;
 	
 	public static final String EASY = "EASY";
 	public static final String NORMAL = "NORMAL";
 	public static final String HARD = "HARD";
+	public static final String CUSTOM = "CUSTOM";
 	
 	/**
 	 * Convenience constructor for set BoardSetting with default values
 	 * @param level
 	 */
 	public BoardSettings(String level) {
+		this.level = level;
 		switch(level.toUpperCase()) {
 			case EASY: 
 				this.rows = 9;
