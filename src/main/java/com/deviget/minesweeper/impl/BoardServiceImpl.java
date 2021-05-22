@@ -37,10 +37,7 @@ public class BoardServiceImpl implements BoardService {
 		log.info("Creating a new board {}, NumberOfCells: {}", settings, numberOfCells);
 
 		Set<Integer> minedFields = generateMines(numberOfCells - 1, settings.getMines());
-		Field[][] board = fillBoard(settings.getRows(), settings.getColumns(), minedFields);
-		log.info("Generated board are \n {}", printBoard(settings.getRows(), settings.getColumns(), board, true) );
-		
-		return board;
+		return fillBoard(settings.getRows(), settings.getColumns(), minedFields);		
 	}
 
 	/**
@@ -92,27 +89,6 @@ public class BoardServiceImpl implements BoardService {
 		}
 		
 		return board;
-	}
-	
-	private String printBoard(int rows, int columns, Field[][] board, boolean reveal) {
-		StringBuilder bld = new StringBuilder();
-		bld.append("|");
-		for(int c=0; c<columns; c++) {
-			bld.append(c).append("|");
-		}
-		bld.append(System.lineSeparator());
-		
-		for(int r=0; r<rows; r++) {
-			bld.append(r);
-			bld.append("|");
-			for(int c=0; c<columns; c++) {
-				bld
-				.append(reveal ? board[r][c].revealBoard() : board[r][c].toString())
-				.append("|");
-			}
-			bld.append(System.lineSeparator());
-		}
-		return bld.toString();
 	}
 	
 	

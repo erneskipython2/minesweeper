@@ -2,6 +2,7 @@ package com.deviget.minesweeper.service;
 
 import java.util.List;
 
+import com.deviget.minesweeper.domain.BoardSettings;
 import com.deviget.minesweeper.domain.SessionGame;
 
 /**
@@ -30,7 +31,7 @@ public interface SessionGameService {
 	 * @param userId
 	 * @return The Created party
 	 */
-	SessionGame createParty(String userId);
+	SessionGame createParty(String userId, BoardSettings settings);
 	
 	/**
 	 * Updates a party

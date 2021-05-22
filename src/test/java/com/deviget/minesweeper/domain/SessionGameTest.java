@@ -36,7 +36,15 @@ class SessionGameTest {
         Date start = MockedData.generateGameDate(2021, 4, 20, 23, 43, 0);
         Date end = MockedData.generateGameDate(2021, 4, 20, 23, 44, 0);
         Long timeTracking = MockedData.generateTimeTracking(start, end);
-        SessionGame ses1 = new SessionGame(MockedData.ID, MockedData.USER_ID, MockedData.STATE,  start, end, timeTracking);        
+        SessionGame ses1 = new SessionGame(MockedData.ID, 
+        		MockedData.USER_ID, 
+        		MockedData.STATE,  
+        		start, 
+        		end, 
+        		timeTracking, 
+        		null, 
+        		null,
+        		null);        
         SessionGame ses2 = SessionGame
         		.builder()
         		.id(MockedData.ID)

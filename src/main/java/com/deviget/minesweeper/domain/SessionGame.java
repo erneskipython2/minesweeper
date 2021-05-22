@@ -30,5 +30,8 @@ public class SessionGame {
 	private Date startGame;
 	private Date lastUpdate;
 	private Long timeTracking;
+	private Field[][] generatedBoard;
+	private Field[][] playingBoard;
+	private BoardSettings settings;
 	
 }

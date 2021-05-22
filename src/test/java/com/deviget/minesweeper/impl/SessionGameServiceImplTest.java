@@ -13,7 +13,6 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.springframework.boot.test.context.SpringBootTest;
-
 import com.deviget.minesweeper.domain.GameStates;
 import com.deviget.minesweeper.domain.SessionGame;
 import com.deviget.minesweeper.exception.MineSweeperException;
@@ -49,7 +48,7 @@ class SessionGameServiceImplTest {
 	@Test
 	void createPartyTest() {
 		Mockito.when(repo.save(Mockito.any(SessionGame.class))).thenReturn(session);
-		SessionGame ses = service.createParty(MockedData.USER_ID);
+		SessionGame ses = service.createParty(MockedData.USER_ID, MockedData.BOARD_SETTINGS);
 		assertNotNull(ses);
 		
 	}
