@@ -8,11 +8,13 @@ import java.util.concurrent.TimeUnit;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.deviget.minesweeper.domain.BoardSettings;
 import com.deviget.minesweeper.domain.ErrorTypes;
 import com.deviget.minesweeper.domain.GameStates;
 import com.deviget.minesweeper.domain.SessionGame;
 import com.deviget.minesweeper.exception.MineSweeperException;
 import com.deviget.minesweeper.repository.SessionGameRepositoryService;
+import com.deviget.minesweeper.service.BoardService;
 import com.deviget.minesweeper.service.SessionGameService;
 
 /**
@@ -25,6 +27,8 @@ public class SessionGameServiceImpl implements SessionGameService {
 
 	@Autowired
 	SessionGameRepositoryService sessionRep;
+	@Autowired
+	BoardService board;
 	
 	@Override
 	public SessionGame createParty(String userId) {
@@ -39,6 +43,8 @@ public class SessionGameServiceImpl implements SessionGameService {
 				.timeTracking(0L)
 				.state(GameStates.STARTED.toString())
 				.build();
+		BoardSettings settings = new BoardSettings(BoardSettings.EASY);
+		board.generateBoard(settings);
 		return sessionRep.save(session);
 	}
 

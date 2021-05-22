@@ -1,6 +1,10 @@
 package com.deviget.minesweeper.domain;
 
 
+import javax.validation.constraints.Max;
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotNull;
+
 import com.deviget.minesweeper.exception.MineSweeperException;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
@@ -21,8 +25,17 @@ import lombok.Data;
 @JsonInclude(Include.NON_NULL)
 public class BoardSettings {
 
+	@Min(9)
+	@Max(30)
+	@NotNull
 	private int rows;
+	@Min(9)
+	@Max(30)
+	@NotNull
 	private int columns;
+	@Max(899)
+	@Min(1)
+	@NotNull
 	private int mines;
 	
 	public static final String EASY = "EASY";
