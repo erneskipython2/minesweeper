@@ -1,10 +1,13 @@
 package com.deviget.minesweeper.util;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 import com.deviget.minesweeper.domain.BoardSettings;
 import com.deviget.minesweeper.domain.ErrorTypes;
 import com.deviget.minesweeper.domain.Field;
+import com.deviget.minesweeper.domain.GameStates;
 import com.deviget.minesweeper.domain.SessionGame;
 import com.deviget.minesweeper.exception.MineSweeperException;
 
@@ -33,6 +36,7 @@ public class GameUtils {
 		String author = "🅱🆈 🅴🆁🅽🅴🆂🅺🅸 🅲🅾🆁🅾🅽🅰🅳🅾";
 		String instructions = "Instructions: Send with the row and column params your next move, Enjoy!";
 		String boardHead = "[̲̅M][̲̅Y] [̲̅B][̲̅O][̲̅A][̲̅R][̲̅D]";
+		String legend = "_ -> unknow | [1..n] -> Number of Mines adjacent | ? -> Flagged | * -> Mined, so you losed :(";
 		
 		StringBuilder bld = new StringBuilder();
 		bld.append(title)
@@ -50,6 +54,9 @@ public class GameUtils {
 		.append(System.lineSeparator())
 		.append("Settings: ")
 		.append(game.getSettings())
+		.append(System.lineSeparator())
+		.append("Legend: ")
+		.append(legend)
 		.append(System.lineSeparator())
 		.append(System.lineSeparator())
 		.append(boardHead)
@@ -103,5 +110,27 @@ public class GameUtils {
 				&& 
 				(column >=0 && column <settings.getColumns())
 				);
+	}
+	
+	/**
+	 * Validates is the game is playable yet
+	 * @param game
+	 */
+	public static final void validateGameIsPlayable(SessionGame game) {
+		List<String> endedStates = new ArrayList<>();
+		endedStates.add(GameStates.LOSE.toString());
+		endedStates.add(GameStates.RESIGNED.toString());
+		endedStates.add(GameStates.WON.toString());
+		boolean playable = true;
+		for(String end: endedStates) {
+			if(end.equals(game.getState())) {
+				playable = false;
+				break;
+			}
+		}
+		if(!playable) {
+			throw new MineSweeperException(ErrorTypes.GAME_ENDED.toString());
+		}
+
 	}
 }

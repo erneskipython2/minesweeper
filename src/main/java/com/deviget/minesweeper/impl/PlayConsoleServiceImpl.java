@@ -1,5 +1,4 @@
 package com.deviget.minesweeper.impl;
-
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -69,7 +68,7 @@ public class PlayConsoleServiceImpl implements PlayConsoleService {
 		if(!surrender) {
 			return GameUtils.printBoard(game, false, false);
 		}
-		game.setState(GameStates.LOSE.toString());
+		game.setState(GameStates.RESIGNED.toString());
 		SessionGame updated = session.updateParty(id, game.getState(), Optional.empty());		
 		
 		String board = GameUtils.printBoard(updated, true, true);

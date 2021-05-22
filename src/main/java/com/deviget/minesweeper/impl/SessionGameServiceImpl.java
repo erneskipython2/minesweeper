@@ -58,8 +58,9 @@ public class SessionGameServiceImpl implements SessionGameService {
 
 	@Override
 	public SessionGame updateParty(String id, String state, Optional<Field [][]> board) {
-		String newState = validateState(state);
 		SessionGame persistence = GameUtils.validatePersistence(sessionRep.findById(id));
+		String newState = validateState(state, persistence);
+		
 		
 		Calendar start = Calendar.getInstance();
 		Calendar lastUpdate = Calendar.getInstance();
@@ -107,17 +108,20 @@ public class SessionGameServiceImpl implements SessionGameService {
 	 * @param state
 	 * @return
 	 */
-	private String validateState(String state) {
-		Boolean valid = false;
+	private String validateState(String state, SessionGame game) {
+		boolean valid = false;
 	    for (GameStates st : GameStates.values()) {
 	        if (st.name().equalsIgnoreCase(state)) {
 	        	valid =  true;
 	        }
 	            
 	    }
-	    if(Boolean.FALSE.equals(valid)) {
+	    if(!valid) {
 			throw new MineSweeperException(ErrorTypes.INVALID_STATE.toString());
 		}
+	    
+	    GameUtils.validateGameIsPlayable(game);
+	    
 	    if(state.equalsIgnoreCase(GameStates.RESUME.toString())) {
 	    	state = GameStates.PLAYING.toString();
 	    }
