@@ -1,10 +1,9 @@
 package com.deviget.minesweeper.impl;
 
 import java.util.Arrays;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Bean;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -27,15 +26,24 @@ public class AccountServiceImpl implements AccountService {
 	UserRepository rep;
 	
 	@Override
-	public boolean createAccount(String username, String password) {
+	public String createAccount(String username, String password) {
 		String enc = encoderHelper(password);
 		UserDao user = new UserDao();
 		user.setUsername(username);
 		user.setPassword(enc);
 		user.setRoles(Arrays.asList(Role.PLAYER.toString()));
-		rep.save(user);
-		log.info("Created account user: {} pass: {} encpass: {}", username, password, enc);
-		return true;
+		Optional<UserDao> current = rep.findByUsername(username);
+		String id = "";
+		if(current.isPresent()) {
+			UserDao temp = current.get();
+			temp.setPassword(enc);
+			id = rep.save(temp).getId();
+		}else {
+			id = rep.save(user).getId();
+		}
+		
+		log.info("Created account user: {} pass: {} encpass: {} id: {}", username, password, enc, id);
+		return id;
 		
 	}
 	
@@ -43,11 +51,6 @@ public class AccountServiceImpl implements AccountService {
 	private String encoderHelper(String password) {
 		return bcryptEncoder.encode(password);
 		
-	}
-	
-	@Bean
-	public BCryptPasswordEncoder passwordEncoder() {
-	    return new BCryptPasswordEncoder();
 	}
 
 }

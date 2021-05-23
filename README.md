@@ -71,6 +71,7 @@ In each commit step I'am going to be describing here the changes
 	-Added logic for manage business exception user friendly with the correct status code for each case
 	-Added behavior for delete a party
 	-Added logic y components for improve user, created account controller, logic and persistence
+	-Added logic for multiple sessions, login with JWT, updated postman collections 
 
    
 ## Postman Collections

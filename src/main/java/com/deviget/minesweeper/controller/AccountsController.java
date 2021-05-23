@@ -40,9 +40,9 @@ public class AccountsController {
 		String user = HtmlUtils.htmlEscape(username);
 		String pass = HtmlUtils.htmlEscape(password);
 		
-		
-		if(serv.createAccount(user, pass)) {
-			return ResponseEntity.ok("ACCOUNT CREATED FOR "+username);
+		String result = serv.createAccount(user, pass);
+		if(!result.isEmpty()) {
+			return ResponseEntity.ok("ACCOUNT ID: "+result);
 		}
 		return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("AN ERROR HAPPENS CREATING ACCOUNT - TRY LATER");
 	}
