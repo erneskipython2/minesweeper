@@ -139,7 +139,7 @@ public class PlayConsoleServiceImpl implements PlayConsoleService {
 			return GameUtils.printBoard(game, false, false);
 		}
 		game.setState(GameStates.RESIGNED.toString());
-		SessionGame updated = session.updateParty(id, game.getState(), 0, Optional.empty(), Optional.empty());		
+		SessionGame updated = session.updateParty(id, game.getState(), game.getMovements(), Optional.empty(), Optional.empty());		
 		
 		String board = GameUtils.printBoard(updated, true, true);
 		log.debug("Surrender party session id {} -  board \n{}",game.getId(), board );
