@@ -17,4 +17,11 @@ public interface BoardService {
 	 * @return
 	 */
 	Field[][] generateBoard(BoardSettings settings, boolean isPlayer);
+	
+	/**
+	 * Count the adjacendt mines for a board
+	 * @param settings
+	 * @param board
+	 */
+	void countMines(BoardSettings settings, Field[][] board);
 }

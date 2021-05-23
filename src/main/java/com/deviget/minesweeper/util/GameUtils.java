@@ -215,9 +215,10 @@ public class GameUtils {
 	 * @param row
 	 * @param column
 	 */
-	public static final void reorderGeneratedBoar(SessionGame game, int row, int column) {
+	public static final FieldCoordinate reorderGeneratedBoar(SessionGame game, int row, int column) {
+		FieldCoordinate coord = new FieldCoordinate(row, column);
 		try {
-			Field[][] generatedBoard = game.getGeneratedBoard();
+			Field[][] generatedBoard = game.getGeneratedBoard().clone();
 			SecureRandom secureRandom = SecureRandom.getInstance("NativePRNG");
 			boolean inmigrate = true;
 			while(inmigrate) {
@@ -227,16 +228,19 @@ public class GameUtils {
 						generatedBoard[newRow][newColumn].isMined()) {
 					continue;
 				}
-				generatedBoard[row][column].setMined(false);
-				generatedBoard[newRow][newColumn].setMined(true);
+				//generatedBoard[row][column].setMined(false);
+				//generatedBoard[newRow][newColumn].setMined(true);
 				log.info("mine moved to row: {} column: {}", newRow, newColumn);
+				coord.setRow(newRow);
+				coord.setColumn(newColumn);
 				inmigrate = false;
 			}
-			game.setGeneratedBoard(generatedBoard);
+			//game.setGeneratedBoard(generatedBoard);
 			
 		}catch(NoSuchAlgorithmException e) {
 			log.error("Error reordering the board {}", e.getMessage());
-		}	
+		}
+		return coord;
 	}
 	
 }
