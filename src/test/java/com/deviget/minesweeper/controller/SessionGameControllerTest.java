@@ -12,6 +12,7 @@ import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.HttpStatus;
+import org.springframework.test.context.ActiveProfiles;
 
 import com.deviget.minesweeper.domain.BoardSettings;
 import com.deviget.minesweeper.domain.SessionGame;
@@ -19,6 +20,7 @@ import com.deviget.minesweeper.service.SessionGameService;
 import com.deviget.minesweeper.utils.MockedData;
 
 @SpringBootTest
+@ActiveProfiles("test")
 class SessionGameControllerTest {
 
 	@Mock
@@ -64,11 +66,11 @@ class SessionGameControllerTest {
 	void delTest() {
 		Mockito.when(service.deleteParty(Mockito.anyString())).thenReturn(true);
 		
-		assertEquals(HttpStatus.OK, ctrl.deleteParty("123").getStatusCode());
+		assertEquals(HttpStatus.OK, ctrl.deleteParty("123","123").getStatusCode());
 		
 		Mockito.when(service.deleteParty(Mockito.anyString())).thenReturn(false);
 		
-		assertEquals(HttpStatus.NOT_FOUND, ctrl.deleteParty("123").getStatusCode());
+		assertEquals(HttpStatus.NOT_FOUND, ctrl.deleteParty("123","123").getStatusCode());
 	}
 	
 	@Test

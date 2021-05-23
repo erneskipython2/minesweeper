@@ -69,6 +69,7 @@ In each commit step I'am going to be describing here the changes
 	-Improved custom row, columns and mines board creation
 	-Added logic for move mine if this is the first move
 	-Added logic for manage business exception user friendly with the correct status code for each case
+	-Added behavior for delete a party
 
    
 ## Postman Collections

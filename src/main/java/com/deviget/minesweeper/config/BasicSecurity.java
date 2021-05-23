@@ -35,6 +35,7 @@ public class BasicSecurity extends WebSecurityConfigurerAdapter {
           .antMatchers(HttpMethod.PATCH, props.getRoot() + props.getV1() + props.getSessionGames()).authenticated()
           .antMatchers(HttpMethod.GET, props.getRoot() + props.getV1() + props.getSessionGames() + "/*").authenticated()
           .antMatchers(HttpMethod.GET, props.getRoot() + props.getV1() + props.getSessionGames() + "/*/*").authenticated()
+          .antMatchers(HttpMethod.DELETE, props.getRoot() + props.getV1() + props.getSessionGames() + "/*/*").authenticated()
           .antMatchers(HttpMethod.PATCH, 
         		  props.getRoot() + props.getV1() + props.getSessionGames() + "/*/*" + props.getPlay() ).authenticated()
           .anyRequest()

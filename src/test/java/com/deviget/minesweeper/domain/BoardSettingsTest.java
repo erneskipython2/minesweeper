@@ -5,12 +5,14 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.context.ActiveProfiles;
 
 import com.deviget.minesweeper.exception.MineSweeperException;
 
 import nl.jqno.equalsverifier.EqualsVerifier;
 
 @SpringBootTest
+@ActiveProfiles("test")
 class BoardSettingsTest {
 
 	@Test

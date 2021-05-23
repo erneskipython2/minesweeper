@@ -8,6 +8,7 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
+import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
@@ -23,6 +24,7 @@ import com.openpojo.validation.test.impl.SetterTester;
 @ExtendWith(SpringExtension.class)
 @EnableConfigurationProperties(value = EndpointsConfig.class)
 @TestPropertySource("classpath:application.properties")
+@ActiveProfiles("test")
 class EndpointsConfigTest {
 
 	@Autowired

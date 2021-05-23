@@ -6,6 +6,7 @@ import java.util.Date;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.context.ActiveProfiles;
 
 import com.deviget.minesweeper.utils.MockedData;
 import com.openpojo.reflection.PojoClass;
@@ -19,6 +20,7 @@ import com.openpojo.validation.test.impl.SetterTester;
 import nl.jqno.equalsverifier.EqualsVerifier;
 
 @SpringBootTest
+@ActiveProfiles("test")
 class SessionGameTest {
 	
 	@Test

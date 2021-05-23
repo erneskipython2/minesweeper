@@ -13,6 +13,8 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.context.ActiveProfiles;
+
 import com.deviget.minesweeper.domain.GameStates;
 import com.deviget.minesweeper.domain.SessionGame;
 import com.deviget.minesweeper.exception.MineSweeperException;
@@ -21,6 +23,7 @@ import com.deviget.minesweeper.service.SessionGameService;
 import com.deviget.minesweeper.utils.MockedData;
 
 @SpringBootTest
+@ActiveProfiles("test")
 class SessionGameServiceImplTest {
 	
 	@Mock
