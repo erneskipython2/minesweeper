@@ -11,6 +11,7 @@ import com.deviget.minesweeper.domain.FieldCoordinate;
 import com.deviget.minesweeper.domain.GameStates;
 import com.deviget.minesweeper.domain.SessionGame;
 import com.deviget.minesweeper.repository.SessionGameRepositoryService;
+import com.deviget.minesweeper.service.BoardService;
 import com.deviget.minesweeper.service.PlayConsoleService;
 import com.deviget.minesweeper.service.SessionGameService;
 import com.deviget.minesweeper.util.GameUtils;
@@ -30,6 +31,8 @@ public class PlayConsoleServiceImpl implements PlayConsoleService {
 	SessionGameRepositoryService sessionRep;
 	@Autowired
 	SessionGameService session;
+	@Autowired
+	BoardService bServ;
 
 	@Override
 	public String play(String id) {
@@ -44,10 +47,19 @@ public class PlayConsoleServiceImpl implements PlayConsoleService {
 		SessionGame game = GameUtils.validatePersistence(sessionRep.findById(id));
 		Field[][] playingBoard = game.getPlayingBoard();
 		boolean updateGeneratedBoard = false;	
-		if(game.getMovements() == 0) {
-			GameUtils.reorderGeneratedBoar(game, row, column);
+		
+		if(game.getMovements()== 0 && game.getGeneratedBoard()[row][column].isMined()) {
+			
+			FieldCoordinate coord = GameUtils.reorderGeneratedBoar(game, row, column);
+			Field[][] generatedBoard = game.getGeneratedBoard();
+			generatedBoard[row][column].setMined(false);
+			generatedBoard[coord.getRow()][coord.getColumn()].setMined(true);
+			bServ.countMines(game.getSettings(), generatedBoard);
+			game.setGeneratedBoard(generatedBoard);
+			log.info("new board is {}", GameUtils.printBoard(game, true, true));
 			updateGeneratedBoard = true;
 		}
+		
 		
 		if(playingBoard[row][column].isSafe()) {
 			log.debug("Field already cleared - skip movement");
@@ -79,7 +91,13 @@ public class PlayConsoleServiceImpl implements PlayConsoleService {
 				
 			}
 		}
-						
+		
+		if(wonParty(game)) {
+			game.setState(GameStates.WON.toString());
+			updateGeneratedBoard = false;
+		}
+		
+		
 		SessionGame updated = session.updateParty(id, game.getState(), game.getMovements(), Optional.of(game.getPlayingBoard()), updateGeneratedBoard? Optional.of(game.getGeneratedBoard()) : Optional.empty());
 		String board = GameUtils.printBoard(updated, updated.getState().equals(GameStates.LOSE.toString()), updated.getState().equals(GameStates.LOSE.toString()));
 		log.debug("Playing party session id {} -  board \n{}",game.getId(), board );
@@ -121,11 +139,34 @@ public class PlayConsoleServiceImpl implements PlayConsoleService {
 			return GameUtils.printBoard(game, false, false);
 		}
 		game.setState(GameStates.RESIGNED.toString());
-		SessionGame updated = session.updateParty(id, game.getState(), 0, Optional.empty(), Optional.empty());		
+		SessionGame updated = session.updateParty(id, game.getState(), game.getMovements(), Optional.empty(), Optional.empty());		
 		
 		String board = GameUtils.printBoard(updated, true, true);
 		log.debug("Surrender party session id {} -  board \n{}",game.getId(), board );
 		return board;
+	}
+	
+	/**
+	 * Validates if the game is won
+	 * @param game
+	 * @return
+	 */
+	private boolean wonParty(SessionGame game) {
+		
+		Field[][] playingBoard = game.getPlayingBoard();
+		int rows = game.getSettings().getRows();
+		int columns = game.getSettings().getColumns();
+		int safeFields = 0;
+		for (int r=0; r<rows; r++ ) {
+			for(int c=0; c<columns; c++) {
+				if(playingBoard[r][c].isSafe()) {
+					safeFields++;
+				}
+			}
+		}
+		log.info("safeField {} mines {} cells {}", safeFields, game.getSettings().getMines(), rows*columns);
+		return ((safeFields + game.getSettings().getMines()) == (rows*columns));
+		
 	}
 	
 }

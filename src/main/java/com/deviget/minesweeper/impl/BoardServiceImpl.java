@@ -31,7 +31,7 @@ public class BoardServiceImpl implements BoardService {
 
 		int numberOfCells = settings.getRows() * settings.getColumns();
 
-		if (numberOfCells -1 < settings.getMines() || settings.getMines() <=1) {
+		if (numberOfCells -1 < settings.getMines() || settings.getMines() <1) {
 			throw new MineSweeperException(ErrorTypes.INVALID_MINES_NUMBER.toString());
 		}
 
@@ -121,7 +121,7 @@ public class BoardServiceImpl implements BoardService {
 	 * @param settings
 	 * @param board
 	 */
-	private void countMines(BoardSettings settings, Field[][] board) {
+	public void countMines(BoardSettings settings, Field[][] board) {
 
 		for(int r=0; r<settings.getRows(); r++) {
 			for(int c=0; c<settings.getColumns(); c++) {

@@ -281,24 +281,24 @@
 					"formdata": [
 						{
 							"key": "row",
-							"value": "8",
+							"value": "1",
 							"type": "text"
 						},
 						{
 							"key": "column",
-							"value": "4",
+							"value": "3",
 							"type": "text"
 						},
 						{
 							"key": "flag",
 							"value": "true",
-							"type": "text"
+							"type": "text",
+							"disabled": true
 						},
 						{
 							"key": "surrender",
 							"value": "true",
-							"type": "text",
-							"disabled": true
+							"type": "text"
 						}
 					]
 				},
@@ -446,6 +446,26 @@
 						"api",
 						"v1",
 						"login"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "api-docs",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8090/v2/api-docs",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8090",
+					"path": [
+						"v2",
+						"api-docs"
 					]
 				}
 			},
