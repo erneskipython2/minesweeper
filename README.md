@@ -42,21 +42,21 @@ In each commit step I'am going to be describing here the changes
 	🅱🆈 🅴🆁🅽🅴🆂🅺🅸 🅲🅾🆁🅾🅽🅰🅳🅾
 	
 	Instructions: Send with the row and column params your next move, Enjoy!
-	State: STARTED | Time Playing: 343 (seconds)
-	Settings: BoardSettings(rows=9, columns=9, mines=10)
-	Legend: _ -> unknow | [1..n] -> Number of Mines adjacent | ? -> Flagged | * -> Mined, so you losed :(
+	State: STARTED | Time Playing: 82 (seconds) | Movements: 2
+	Settings: BoardSettings(rows=9, columns=9, mines=10, level=EASY)
+	Legend: ☐ -> unknow | ☑ -> safe | [1..n] -> Number of Mines adjacent | � -> Flagged | ☠ -> Mined, so you losed :(
 	
 	[̲̅M][̲̅Y] [̲̅B][̲̅O][̲̅A][̲̅R][̲̅D]
-	  |0|1|2|3|4|5|6|7|8|
-	 0| | |1|_|_|_|1|_|_|
-	 1|1|1|2|_|_|_|_|_|_|
-	 2|_|_|_|_|_|_|_|_|_|
-	 3|1|1|2|_|_|_|_|_|_|
-	 4| | |1|_|_|_|_|_|_|
-	 5| | |1|_|_|_|_|_|_|
-	 6| | |1|_|_|_|_|_|_|
-	 7| | |1|?|_|_|_|_|_|
-	 8| | |1|_|_|_|_|_|1|
+	   |0|1|2|3|4|5|6|7|8|
+	 0 |☑|☑|☑|1|☐|☐|☐|☐|☐|
+	 1 |2|2|1|1|☐|☐|☐|☐|☐|
+	 2 |☐|☐|☐|☐|☐|☐|☐|☐|☐|
+	 3 |☐|☐|☐|☐|☐|☐|☐|☐|☐|
+	 4 |☐|☐|☐|☐|☐|☐|☐|☐|☐|
+	 5 |☐|☐|☐|☐|☐|☐|☐|☐|☐|
+	 6 |☐|☐|☐|☐|☐|☐|☐|☐|☐|
+	 7 |�|☐|☐|☐|☐|☐|☐|☐|☐|
+	 8 |☐|☐|☐|☐|☐|☐|☐|☐|☐|
 		
 	-Added interface for playing
 	-Added play endpoints and base logic for playing. Some corrections and pretty presentation.
@@ -68,6 +68,10 @@ In each commit step I'am going to be describing here the changes
 	-Added logic for clean recursively the board when a field is safe and its adjacent fields
 	-Improved custom row, columns and mines board creation
 	-Added logic for move mine if this is the first move
+	-Added logic for manage business exception user friendly with the correct status code for each case
+	-Added behavior for delete a party
+	-Added logic y components for improve user, created account controller, logic and persistence
+	-Added logic for multiple sessions, login with JWT, updated postman collections 
 
    
 ## Postman Collections

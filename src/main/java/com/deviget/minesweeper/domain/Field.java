@@ -29,15 +29,15 @@ public class Field {
 	public String toString() {
 		
 		if(this.isFlaged) {
-			return "?";
+			return "�";
 		}
 		else if(this.isSafe && adyacentMines > 0) {
 			return Integer.toString(this.adyacentMines);
 		}else if(this.isSafe && adyacentMines == 0) {
-			return " ";
+			return "☑";
 		}
 		else {
-			return "_";
+			return "☐";
 		}
 	}	
 	
@@ -45,9 +45,9 @@ public class Field {
 		if(this.isFlaged) {
 			return "?";
 		}else if (this.isMined) {
-			return "*";
+			return "☠";
 		}else {
-			return "_";
+			return "☐";
 		}
 	}
 	
