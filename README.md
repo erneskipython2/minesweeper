@@ -156,6 +156,7 @@ You has the following options (Check the paramenter to send):
 	-Added logic for multiple sessions, login with JWT, updated postman collections 
 	-Added validation for WON party
 	-Added Sonar and Dockerfile and Swagger
+	-Added final revitions, javadoc, swagger and the readme organized
 
 ## TODO
 	
