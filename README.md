@@ -68,6 +68,7 @@ In each commit step I'am going to be describing here the changes
 	-Added logic for clean recursively the board when a field is safe and its adjacent fields
 	-Improved custom row, columns and mines board creation
 	-Added logic for move mine if this is the first move
+	-Added logic for manage business exception user friendly with the correct status code for each case
 
    
 ## Postman Collections
