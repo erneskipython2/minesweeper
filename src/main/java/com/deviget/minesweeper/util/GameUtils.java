@@ -45,7 +45,7 @@ public class GameUtils {
 		String author = "🅱🆈 🅴🆁🅽🅴🆂🅺🅸 🅲🅾🆁🅾🅽🅰🅳🅾";
 		String instructions = "Instructions: Send with the row and column params your next move, Enjoy!";
 		String boardHead = "[̲̅M][̲̅Y] [̲̅B][̲̅O][̲̅A][̲̅R][̲̅D]";
-		String legend = "_ -> unknow | [1..n] -> Number of Mines adjacent | ? -> Flagged | * -> Mined, so you losed :(";
+		String legend = "☐ -> unknow | ☑ -> safe | [1..n] -> Number of Mines adjacent | � -> Flagged | ☠ -> Mined, so you losed :(";
 		
 		StringBuilder bld = new StringBuilder();
 		bld.append(title)
@@ -72,7 +72,7 @@ public class GameUtils {
 		.append(System.lineSeparator())
 		.append(boardHead)
 		.append(System.lineSeparator());
-		bld.append("  |");
+		bld.append("   |");
 		for(int c=0; c<game.getSettings().getColumns(); c++) {
 			bld.append(c).append("|");
 		}
@@ -82,7 +82,7 @@ public class GameUtils {
 			if(r<=9) {
 				bld.append(" ");
 			}
-			bld.append(r);
+			bld.append(r).append(" ");
 			bld.append("|");
 			for(int c=0; c<game.getSettings().getColumns(); c++) {
 				Field[][] generatedBoard;

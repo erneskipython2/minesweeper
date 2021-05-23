@@ -14,6 +14,7 @@ import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ActiveProfiles;
+import org.springframework.test.context.TestPropertySource;
 
 import com.deviget.minesweeper.domain.GameStates;
 import com.deviget.minesweeper.domain.SessionGame;
@@ -23,11 +24,14 @@ import com.deviget.minesweeper.service.SessionGameService;
 import com.deviget.minesweeper.utils.MockedData;
 
 @SpringBootTest
+@TestPropertySource("classpath:application-test.properties")
 @ActiveProfiles("test")
 class SessionGameServiceImplTest {
 	
 	@Mock
 	SessionGameRepositoryService repo;
+	@Mock
+	BoardServiceImpl board = new BoardServiceImpl();
 	
 	@InjectMocks
 	SessionGameService service = new SessionGameServiceImpl();
@@ -51,6 +55,8 @@ class SessionGameServiceImplTest {
 	@Test
 	void createPartyTest() {
 		Mockito.when(repo.save(Mockito.any(SessionGame.class))).thenReturn(session);
+		Mockito.when(board.generateBoard( MockedData.BOARD_SETTINGS, true)).thenCallRealMethod();
+		Mockito.when(board.generateBoard( MockedData.BOARD_SETTINGS, false)).thenCallRealMethod();
 		SessionGame ses = service.createParty(MockedData.USER_ID, MockedData.BOARD_SETTINGS);
 		assertNotNull(ses);
 		

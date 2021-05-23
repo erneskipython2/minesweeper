@@ -7,6 +7,7 @@ import java.util.Date;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ActiveProfiles;
+import org.springframework.test.context.TestPropertySource;
 
 import com.deviget.minesweeper.utils.MockedData;
 import com.openpojo.reflection.PojoClass;
@@ -20,6 +21,7 @@ import com.openpojo.validation.test.impl.SetterTester;
 import nl.jqno.equalsverifier.EqualsVerifier;
 
 @SpringBootTest
+@TestPropertySource("classpath:application-test.properties")
 @ActiveProfiles("test")
 class SessionGameTest {
 	
@@ -56,6 +58,7 @@ class SessionGameTest {
         		.startGame(start)
         		.lastUpdate(end)
         		.timeTracking(timeTracking)
+        		.movements(0)
         		.build();
         assertTrue(ses1.toString().contains("timeTracking"));
         assertTrue(ses2.toString().contains("state=" + MockedData.STATE));

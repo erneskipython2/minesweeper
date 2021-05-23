@@ -29,7 +29,7 @@ import javax.validation.constraints.Size;
 
 /**
  * Controller For Expose Session Game functionality
- * @author e0c05ua - Erneski Coronado
+ * @author Erneski Coronado
  *
  */
 @RestController

@@ -13,6 +13,7 @@ import org.mockito.Mockito;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.HttpStatus;
 import org.springframework.test.context.ActiveProfiles;
+import org.springframework.test.context.TestPropertySource;
 
 import com.deviget.minesweeper.domain.BoardSettings;
 import com.deviget.minesweeper.domain.SessionGame;
@@ -20,6 +21,7 @@ import com.deviget.minesweeper.service.SessionGameService;
 import com.deviget.minesweeper.utils.MockedData;
 
 @SpringBootTest
+@TestPropertySource("classpath:application-test.properties")
 @ActiveProfiles("test")
 class SessionGameControllerTest {
 
@@ -55,9 +57,10 @@ class SessionGameControllerTest {
 				Optional.of(10)).getStatusCode());
 	}
 	
+	@SuppressWarnings("unchecked")
 	@Test
 	void putTest() {
-		Mockito.when(service.updateParty(Mockito.anyString(), Mockito.anyString(), 0, Optional.empty(), Optional.empty())).thenReturn(session);
+		Mockito.when(service.updateParty(Mockito.anyString(), Mockito.anyString(), Mockito.anyInt(), Mockito.any(Optional.class), Mockito.any(Optional.class))).thenReturn(session);
 		
 		assertEquals(HttpStatus.OK, ctrl.updateParty("123", "abcd").getStatusCode());
 	}
