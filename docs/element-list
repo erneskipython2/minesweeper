@@ -1,0 +1,10 @@
+com.deviget.minesweeper
+com.deviget.minesweeper.config
+com.deviget.minesweeper.controller
+com.deviget.minesweeper.domain
+com.deviget.minesweeper.exception
+com.deviget.minesweeper.impl
+com.deviget.minesweeper.repository
+com.deviget.minesweeper.service
+com.deviget.minesweeper.util
+com.deviget.minesweeper.utils

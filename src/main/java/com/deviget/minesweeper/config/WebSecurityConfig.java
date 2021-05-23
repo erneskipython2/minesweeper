@@ -71,6 +71,9 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 	protected void configure(HttpSecurity httpSecurity) throws Exception {
 		httpSecurity.cors().and().csrf().disable()
         .authorizeRequests()//NOSONAR
+		        .antMatchers("/", "/csrf", "/v2/api-docs", "/swagger-resources/configuration/ui", 
+						"/configuration/ui", "/swagger-resources", "/swagger-resources/configuration/security", 
+						"/configuration/security", "/swagger-ui.html", "/webjars/**").permitAll()
 				.antMatchers(HttpMethod.GET, "/actuator/logfile").authenticated()
 				  .antMatchers(HttpMethod.GET, "/actuator/info").authenticated()
 				  .antMatchers(HttpMethod.GET, "/actuator/health").authenticated()
