@@ -1,16 +1,11 @@
-package com.deviget.minesweeper.config;
+package com.deviget.minesweeper.domain;
 
-import static org.hamcrest.CoreMatchers.containsString;
-import static org.hamcrest.MatcherAssert.assertThat;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.context.properties.EnableConfigurationProperties;
+import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.TestPropertySource;
-import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 import com.openpojo.reflection.PojoClass;
 import com.openpojo.reflection.impl.PojoClassFactory;
@@ -21,25 +16,16 @@ import com.openpojo.validation.rule.impl.SetterMustExistRule;
 import com.openpojo.validation.test.impl.GetterTester;
 import com.openpojo.validation.test.impl.SetterTester;
 
-@ExtendWith(SpringExtension.class)
-@EnableConfigurationProperties(value = EndpointsConfig.class)
+import nl.jqno.equalsverifier.EqualsVerifier;
+
+@SpringBootTest
 @TestPropertySource("classpath:application-test.properties")
 @ActiveProfiles("test")
-class EndpointsConfigTest {
+class FieldCoordinatesTest {
 
-	@Autowired
-    private EndpointsConfig end;
-
-    @Test
-    void infoConfigTest() {
-        assertEquals("/api", end.getRoot());
-        assertEquals("/v1", end.getV1());
-        assertThat(end.toString(), containsString("api"));
-    }
-    
-    @Test
-    void testGetterSetter() {
-        PojoClass pojoclass = PojoClassFactory.getPojoClass(EndpointsConfig.class);
+	@Test
+	void testGetterSetter() {
+        PojoClass pojoclass = PojoClassFactory.getPojoClass(FieldCoordinate.class);
         Validator validator = ValidatorBuilder
                 .create()
                 .with(new SetterMustExistRule())
@@ -47,7 +33,20 @@ class EndpointsConfigTest {
                 .with(new SetterTester())
                 .with(new GetterTester())
                 .build();
-        validator.validate(pojoclass);
-    }
-    
+        validator.toString();
+        validator.validate(pojoclass);         
+        EqualsVerifier.simple().forClass(FieldCoordinate.class).verify();
+        FieldCoordinate.builder().toString();
+        FieldCoordinate field = new FieldCoordinate(2, 3);
+        field.toString();
+        FieldCoordinate field6 = FieldCoordinate.builder()
+        		.row(2)
+        		.column(3)
+        		.build();
+        FieldCoordinate field7 = new FieldCoordinate();
+        field7.setColumn(3);
+        field7.setRow(2);
+        assertEquals(field6, field7);
+
+	}
 }

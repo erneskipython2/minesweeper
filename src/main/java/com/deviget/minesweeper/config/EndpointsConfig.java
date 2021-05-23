@@ -24,4 +24,6 @@ public class EndpointsConfig {
 	private String v1;
 	private String sessionGames;
 	private String play;
+	private String accounts;
+	private String login;
 }

@@ -23,6 +23,7 @@ public class MockedData {
 			.columns(9)
 			.rows(9)
 			.mines(10)
+			.level(BoardSettings.EASY)
 			.build();
 
 	/**

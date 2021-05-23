@@ -68,6 +68,11 @@ public class BoardSettings {
 				this.columns = 24;
 				this.mines = 99;
 				break;
+			case CUSTOM:
+				this.rows = 9;
+				this.columns = 9;
+				this.mines = 10;
+				break;
 			default:
 				throw new MineSweeperException(ErrorTypes.INVALID_LEVEL.toString());			
 		}

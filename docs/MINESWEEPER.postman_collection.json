@@ -7,18 +7,25 @@
 	"item": [
 		{
 			"name": "create",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"var jsonData = JSON.parse(responseBody);",
+							"postman.setEnvironmentVariable(\"PARTY_ID\", jsonData.id);"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
 			"request": {
 				"auth": {
-					"type": "basic",
-					"basic": [
+					"type": "bearer",
+					"bearer": [
 						{
-							"key": "password",
-							"value": "pass",
-							"type": "string"
-						},
-						{
-							"key": "username",
-							"value": "user",
+							"key": "token",
+							"value": "{{MINESWEEPER_TOKEN}}",
 							"type": "string"
 						}
 					]
@@ -30,8 +37,43 @@
 					"formdata": [
 						{
 							"key": "userId",
-							"value": "123",
+							"value": "{{MINESWEEPER_USER_ID}}",
 							"type": "text"
+						},
+						{
+							"key": "level",
+							"value": "EASY",
+							"type": "text"
+						},
+						{
+							"key": "level",
+							"value": "NORMAL",
+							"type": "text",
+							"disabled": true
+						},
+						{
+							"key": "level",
+							"value": "HARD",
+							"type": "text",
+							"disabled": true
+						},
+						{
+							"key": "row",
+							"value": "12",
+							"type": "text",
+							"disabled": true
+						},
+						{
+							"key": "column",
+							"value": "6",
+							"type": "text",
+							"disabled": true
+						},
+						{
+							"key": "mines",
+							"value": "2",
+							"type": "text",
+							"disabled": true
 						}
 					],
 					"options": {
@@ -60,28 +102,23 @@
 			"name": "update",
 			"request": {
 				"auth": {
-					"type": "basic",
-					"basic": [
+					"type": "bearer",
+					"bearer": [
 						{
-							"key": "password",
-							"value": "pass",
-							"type": "string"
-						},
-						{
-							"key": "username",
-							"value": "user",
+							"key": "token",
+							"value": "{{MINESWEEPER_TOKEN}}",
 							"type": "string"
 						}
 					]
 				},
-				"method": "PUT",
+				"method": "PATCH",
 				"header": [],
 				"body": {
 					"mode": "formdata",
 					"formdata": [
 						{
 							"key": "id",
-							"value": "60a787809ef9e75027bbeb64",
+							"value": "{{PARTY_ID}}",
 							"type": "text"
 						},
 						{
@@ -98,6 +135,12 @@
 						{
 							"key": "state",
 							"value": "RESUME",
+							"type": "text",
+							"disabled": true
+						},
+						{
+							"key": "state",
+							"value": "BADSTATE",
 							"type": "text",
 							"disabled": true
 						}
@@ -123,16 +166,11 @@
 			"name": "getParties",
 			"request": {
 				"auth": {
-					"type": "basic",
-					"basic": [
+					"type": "bearer",
+					"bearer": [
 						{
-							"key": "password",
-							"value": "pass",
-							"type": "string"
-						},
-						{
-							"key": "username",
-							"value": "user",
+							"key": "token",
+							"value": "{{MINESWEEPER_TOKEN}}",
 							"type": "string"
 						}
 					]
@@ -140,7 +178,7 @@
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "http://localhost:8090/api/v1/session-games/123",
+					"raw": "http://localhost:8090/api/v1/session-games/{{MINESWEEPER_USER_ID}}",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -150,7 +188,7 @@
 						"api",
 						"v1",
 						"session-games",
-						"123"
+						"{{MINESWEEPER_USER_ID}}"
 					]
 				}
 			},
@@ -159,10 +197,20 @@
 		{
 			"name": "getParty",
 			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{MINESWEEPER_TOKEN}}",
+							"type": "string"
+						}
+					]
+				},
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "http://localhost:8090/api/v1/session-games/123/60a787809ef9e75027bbeb64",
+					"raw": "http://localhost:8090/api/v1/session-games/{{MINESWEEPER_USER_ID}}/{{PARTY_ID}}",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -172,8 +220,232 @@
 						"api",
 						"v1",
 						"session-games",
-						"123",
-						"60a787809ef9e75027bbeb64"
+						"{{MINESWEEPER_USER_ID}}",
+						"{{PARTY_ID}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "view-playing",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{MINESWEEPER_TOKEN}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8090/api/v1/session-games/{{MINESWEEPER_USER_ID}}/{{PARTY_ID}}/play",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8090",
+					"path": [
+						"api",
+						"v1",
+						"session-games",
+						"{{MINESWEEPER_USER_ID}}",
+						"{{PARTY_ID}}",
+						"play"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "play-move",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{MINESWEEPER_TOKEN}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "PATCH",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "row",
+							"value": "8",
+							"type": "text"
+						},
+						{
+							"key": "column",
+							"value": "4",
+							"type": "text"
+						},
+						{
+							"key": "flag",
+							"value": "true",
+							"type": "text"
+						},
+						{
+							"key": "surrender",
+							"value": "true",
+							"type": "text",
+							"disabled": true
+						}
+					]
+				},
+				"url": {
+					"raw": "http://localhost:8090/api/v1/session-games/{{MINESWEEPER_USER_ID}}/{{PARTY_ID}}/play",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8090",
+					"path": [
+						"api",
+						"v1",
+						"session-games",
+						"{{MINESWEEPER_USER_ID}}",
+						"{{PARTY_ID}}",
+						"play"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "delete",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{MINESWEEPER_TOKEN}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8090/api/v1/session-games/{{MINESWEEPER_USER_ID}}/{{PARTY_ID}}",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8090",
+					"path": [
+						"api",
+						"v1",
+						"session-games",
+						"{{MINESWEEPER_USER_ID}}",
+						"{{PARTY_ID}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "create-account",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"var jsonData = responseBody;",
+							"var userId = responseBody.split(\"ACCOUNT ID: \")[1];",
+							"postman.setEnvironmentVariable(\"MINESWEEPER_USER_ID\", userId);"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "username",
+							"value": "deviget",
+							"type": "text"
+						},
+						{
+							"key": "password",
+							"value": "deviget",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "http://localhost:8090/api/v1/accounts",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8090",
+					"path": [
+						"api",
+						"v1",
+						"accounts"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "login",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"var jsonData = JSON.parse(responseBody);",
+							"postman.setEnvironmentVariable(\"MINESWEEPER_TOKEN\", jsonData.jwttoken);"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"username\": \"deviget\",\n\t\"password\": \"deviget\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8090/api/v1/login",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8090",
+					"path": [
+						"api",
+						"v1",
+						"login"
 					]
 				}
 			},

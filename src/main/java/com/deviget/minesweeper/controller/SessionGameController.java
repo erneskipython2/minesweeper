@@ -29,7 +29,7 @@ import javax.validation.constraints.Size;
 
 /**
  * Controller For Expose Session Game functionality
- * @author e0c05ua - Erneski Coronado
+ * @author Erneski Coronado
  *
  */
 @RestController
@@ -97,8 +97,9 @@ public class SessionGameController {
 	 * @param id
 	 * @return
 	 */
-	@DeleteMapping(value="${endpoint.session-games}")
-	public ResponseEntity<Void> deleteParty(@Valid @NotBlank  @Size(min=1, max=30) @RequestParam("id") String id) {
+	@DeleteMapping(value="${endpoint.session-games}/{userId}/{id}")
+	public ResponseEntity<Void> deleteParty(@PathVariable @NotBlank  @Size(min=1, max=30) String userId, 
+			@PathVariable @NotBlank  @Size(min=1, max=30) String id) {
 		String escapedId = HtmlUtils.htmlEscape(id);
 		if(Boolean.TRUE.equals(session.deleteParty(escapedId))) {
 			return ResponseEntity.ok().build();
